@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { generateTitles } from '../../lib/ai-client'
 import styles from './ArtworkForm.module.css'
 
 const TECHNIQUES = [
@@ -134,7 +135,7 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
     return titleValid && widthValid && heightValid && techniqueValid
   }
 
-  // Генерация названий (заглушка для будущей интеграции с AI)
+  // Генерация названий с помощью AI
   const handleGenerateTitles = async () => {
     if (!imageData) {
       setErrors({ ...errors, general: 'Сначала загрузите изображение' })
@@ -143,20 +144,27 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
 
     setIsGeneratingTitles(true)
     setShowTitleGenerator(true)
+    setErrors({ ...errors, general: null })
     
-    // Заглушка - в будущем здесь будет запрос к AI API
-    // Пока симулируем задержку
-    setTimeout(() => {
-      const mockTitles = [
-        'Композиция',
-        'Абстракция',
-        'Пейзаж',
-        'Натюрморт',
-        'Портрет'
-      ]
-      setGeneratedTitles(mockTitles)
+    try {
+      const titles = await generateTitles(imageData.base64)
+      
+      if (titles && titles.length > 0) {
+        setGeneratedTitles(titles)
+      } else {
+        setErrors({ ...errors, general: 'Не удалось сгенерировать названия. Попробуйте еще раз.' })
+        setShowTitleGenerator(false)
+      }
+    } catch (error) {
+      console.error('Ошибка при генерации названий:', error)
+      setErrors({ 
+        ...errors, 
+        general: error.message || 'Ошибка при генерации названий. Проверьте настройки API.' 
+      })
+      setShowTitleGenerator(false)
+    } finally {
       setIsGeneratingTitles(false)
-    }, 1500)
+    }
   }
 
   // Выбор названия из списка

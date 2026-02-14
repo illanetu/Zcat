@@ -13,12 +13,42 @@
 ### Требования
 - Node.js (версия 18 или выше)
 - npm или yarn
+- API ключ OpenAI (для генерации названий и описаний)
 
 ### Установка зависимостей
 
 ```powershell
 npm install
 ```
+
+### Настройка переменных окружения
+
+Создайте файл `.env.local` в корне проекта и добавьте API ключи:
+
+```powershell
+# Скопируйте пример файла
+Copy-Item .env.local.example .env.local
+```
+
+Затем откройте `.env.local` и укажите ваши API ключи.
+
+**Вариант 1: Использование OpenRouter (рекомендуется)**
+```
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+OPENAI_BASE_URL=https://openrouter.ai/api/v1
+OPENROUTER_REFERER_URL=http://localhost:3000
+# Опционально: укажите модель (по умолчанию: openai/gpt-4o)
+# OPENROUTER_MODEL=openai/gpt-4o
+```
+
+**Вариант 2: Использование OpenAI напрямую**
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+Получить API ключи можно:
+- OpenRouter: [OpenRouter.ai](https://openrouter.ai/keys)
+- OpenAI: [OpenAI Platform](https://platform.openai.com/api-keys)
 
 ### Запуск в режиме разработки
 
