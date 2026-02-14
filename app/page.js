@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import ImageUpload from './components/ImageUpload'
 import ArtworkForm from './components/ArtworkForm'
+import ParameterCard from './components/ParameterCard'
+import { buildParameterCard } from '../lib/card-utils'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -22,6 +24,11 @@ export default function Home() {
     setFormData(data)
   }
 
+  // Формируем данные для карточки параметров
+  const parameterCardData = useMemo(() => {
+    return buildParameterCard(formData)
+  }, [formData])
+
   return (
     <div className={styles.app}>
       <header className={styles.appHeader}>
@@ -38,6 +45,17 @@ export default function Home() {
             <ArtworkForm 
               imageData={imageData}
               onFormDataChange={handleFormDataChange}
+            />
+          </section>
+        )}
+
+        {parameterCardData && (
+          <section className={styles.cardsSection}>
+            <h2 className={styles.sectionTitle}>Карточки</h2>
+            <ParameterCard 
+              title={parameterCardData.title}
+              size={parameterCardData.size}
+              technique={parameterCardData.technique}
             />
           </section>
         )}

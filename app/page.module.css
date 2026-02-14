@@ -34,6 +34,11 @@
 
 .formSection {
   width: 100%;
+  margin-bottom: var(--spacing-lg);
+}
+
+.cardsSection {
+  width: 100%;
 }
 
 .sectionTitle {
