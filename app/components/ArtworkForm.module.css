@@ -1,0 +1,264 @@
+.formContainer {
+  width: 100%;
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.label {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.required {
+  color: #c33;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background-color: var(--color-white);
+  transition: all 0.2s ease;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+}
+
+.input::placeholder {
+  color: var(--color-text-light);
+}
+
+.inputError {
+  border-color: #c33;
+}
+
+.inputError:focus {
+  border-color: #c33;
+  box-shadow: 0 0 0 3px rgba(204, 51, 51, 0.1);
+}
+
+.fieldError {
+  display: block;
+  color: #c33;
+  font-size: 0.85rem;
+  margin-top: var(--spacing-xs);
+}
+
+.errorMessage {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: #fee;
+  color: #c33;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid #fcc;
+}
+
+/* Группа для названия с кнопкой генерации */
+.titleInputGroup {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+}
+
+.titleInputGroup .input {
+  flex: 1;
+}
+
+.generateButton {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.generateButton:hover:not(:disabled) {
+  background-color: #7a6349;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.generateButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Генератор названий */
+.titleGenerator {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.titleGeneratorLabel {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+}
+
+.loadingTitles {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  justify-content: center;
+  color: var(--color-text-light);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.titleList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.titleOption {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text);
+}
+
+.titleOption:hover {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.closeGeneratorButton {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: transparent;
+  color: var(--color-text-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.closeGeneratorButton:hover {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+/* Группа размера */
+.sizeGroup {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-end;
+}
+
+.sizeGroup .formGroup {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.sizeSeparator {
+  font-size: 1.5rem;
+  color: var(--color-text-light);
+  padding-bottom: var(--spacing-sm);
+  font-weight: 300;
+}
+
+.customInput {
+  margin-top: var(--spacing-sm);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .formContainer {
+    padding: var(--spacing-md);
+  }
+
+  .titleInputGroup {
+    flex-direction: column;
+  }
+
+  .generateButton {
+    width: 100%;
+  }
+
+  .sizeGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sizeSeparator {
+    display: none;
+  }
+
+  .titleList {
+    flex-direction: column;
+  }
+
+  .titleOption {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .formTitle {
+    font-size: 1.25rem;
+  }
+
+  .formContainer {
+    padding: var(--spacing-sm);
+  }
+}

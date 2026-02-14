@@ -2,13 +2,24 @@
 
 import { useState } from 'react'
 import ImageUpload from './components/ImageUpload'
+import ArtworkForm from './components/ArtworkForm'
 import styles from './page.module.css'
 
 export default function Home() {
   const [imageData, setImageData] = useState(null)
+  const [formData, setFormData] = useState({
+    title: '',
+    width: '',
+    height: '',
+    technique: ''
+  })
 
   const handleImageSelect = (data) => {
     setImageData(data)
+  }
+
+  const handleFormDataChange = (data) => {
+    setFormData(data)
   }
 
   return (
@@ -21,6 +32,15 @@ export default function Home() {
           <h2 className={styles.sectionTitle}>Загрузка изображения</h2>
           <ImageUpload onImageSelect={handleImageSelect} />
         </section>
+        
+        {imageData && (
+          <section className={styles.formSection}>
+            <ArtworkForm 
+              imageData={imageData}
+              onFormDataChange={handleFormDataChange}
+            />
+          </section>
+        )}
       </main>
     </div>
   )

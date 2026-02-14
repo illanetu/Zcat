@@ -29,6 +29,11 @@
 
 .uploadSection {
   width: 100%;
+  margin-bottom: var(--spacing-lg);
+}
+
+.formSection {
+  width: 100%;
 }
 
 .sectionTitle {
