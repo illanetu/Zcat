@@ -8,6 +8,7 @@ export default function ImageUpload({ onImageSelect }) {
   const [imagePreview, setImagePreview] = useState(null)
   const [imageBase64, setImageBase64] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const fileInputRef = useRef(null)
 
@@ -48,28 +49,42 @@ export default function ImageUpload({ onImageSelect }) {
     }
 
     setError(null)
+    setIsLoading(true)
 
-    // Создание превью
+    // Создание превью и конвертация в base64
     const reader = new FileReader()
     
     reader.onloadend = () => {
+      setIsLoading(false)
       const result = reader.result
-      setImagePreview(result)
-      setImage(file)
-      setImageBase64(result)
       
-      // Передача данных родительскому компоненту
-      if (onImageSelect) {
-        onImageSelect({
-          file,
-          preview: result,
-          base64: result
-        })
+      // Проверка, что результат - строка base64
+      if (typeof result === 'string' && result.startsWith('data:')) {
+        setImagePreview(result)
+        setImage(file)
+        setImageBase64(result)
+        
+        // Передача данных родительскому компоненту
+        if (onImageSelect) {
+          onImageSelect({
+            file,
+            preview: result,
+            base64: result
+          })
+        }
+      } else {
+        setError('Ошибка при обработке изображения')
       }
     }
 
     reader.onerror = () => {
+      setIsLoading(false)
       setError('Ошибка при чтении файла')
+    }
+
+    reader.onabort = () => {
+      setIsLoading(false)
+      setError('Чтение файла было прервано')
     }
 
     reader.readAsDataURL(file)
@@ -119,6 +134,7 @@ export default function ImageUpload({ onImageSelect }) {
     setImagePreview(null)
     setImageBase64(null)
     setError(null)
+    setIsLoading(false)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -129,7 +145,15 @@ export default function ImageUpload({ onImageSelect }) {
 
   return (
     <div className={styles.uploadContainer}>
-      {!imagePreview ? (
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/jpg,image/png"
+        onChange={handleFileSelect}
+        className={styles.fileInput}
+        disabled={isLoading}
+      />
+      {!imagePreview && !isLoading ? (
         <div
           className={`${styles.uploadArea} ${isDragging ? styles.dragging : ''}`}
           onDragOver={handleDragOver}
@@ -137,13 +161,6 @@ export default function ImageUpload({ onImageSelect }) {
           onDrop={handleDrop}
           onClick={handleClick}
         >
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/jpeg,image/jpg,image/png"
-            onChange={handleFileSelect}
-            className={styles.fileInput}
-          />
           <div className={styles.uploadContent}>
             <svg
               className={styles.uploadIcon}
@@ -165,6 +182,11 @@ export default function ImageUpload({ onImageSelect }) {
               Поддерживаются форматы: JPG, PNG (макс. 10MB)
             </p>
           </div>
+        </div>
+      ) : isLoading ? (
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingSpinner}></div>
+          <p className={styles.loadingText}>Загрузка изображения...</p>
         </div>
       ) : (
         <div className={styles.previewContainer}>
