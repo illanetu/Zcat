@@ -1,0 +1,90 @@
+/* Базовые стили и сброс */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Цветовая палитра в стиле галереи */
+  --color-primary: #2c2c2c;
+  --color-secondary: #f5f5f5;
+  --color-accent: #8b7355;
+  --color-text: #1a1a1a;
+  --color-text-light: #666666;
+  --color-border: #e0e0e0;
+  --color-white: #ffffff;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Типографика */
+  --font-primary: 'Georgia', 'Times New Roman', serif;
+  --font-secondary: 'Helvetica Neue', 'Arial', sans-serif;
+  
+  /* Отступы */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Радиусы */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  
+  /* Тени */
+  --shadow-sm: 0 2px 4px var(--color-shadow);
+  --shadow-md: 0 4px 8px var(--color-shadow);
+  --shadow-lg: 0 8px 16px var(--color-shadow);
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-secondary);
+  color: var(--color-text);
+  background-color: var(--color-secondary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-primary);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all 0.2s ease;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
