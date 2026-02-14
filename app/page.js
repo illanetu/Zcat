@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <div className={styles.app}>
       <header className={styles.appHeader}>
-        <h1>Генератор карточек для каталогов и выставок</h1>
+        <h1>Генератор описания для каталогов и выставок</h1>
       </header>
       <main className={styles.appMain}>
         <section className={styles.uploadSection}>
