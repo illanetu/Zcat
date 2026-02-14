@@ -11,9 +11,11 @@ export default function Home() {
   const [imageData, setImageData] = useState(null)
   const [formData, setFormData] = useState({
     title: '',
+    author: '',
     width: '',
     height: '',
-    technique: ''
+    technique: '',
+    year: ''
   })
 
   const handleImageSelect = (data) => {
@@ -24,7 +26,7 @@ export default function Home() {
     setFormData(data)
   }
 
-  // Формируем данные для карточки параметров
+  // Формируем данные для этикетки параметров
   const parameterCardData = useMemo(() => {
     return buildParameterCard(formData)
   }, [formData])
@@ -51,11 +53,13 @@ export default function Home() {
 
         {parameterCardData && (
           <section className={styles.cardsSection}>
-            <h2 className={styles.sectionTitle}>Карточки</h2>
+            <h2 className={styles.sectionTitle}>Этикетка</h2>
             <ParameterCard 
               title={parameterCardData.title}
+              author={parameterCardData.author}
               size={parameterCardData.size}
               technique={parameterCardData.technique}
+              year={parameterCardData.year}
             />
           </section>
         )}

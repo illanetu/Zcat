@@ -18,12 +18,28 @@ const TECHNIQUES = [
   'Другое'
 ]
 
+const MATERIALS = [
+  'Холст',
+  'Бумага',
+  'Картон',
+  'Дерево',
+  'Металл',
+  'Стекло',
+  'Ткань',
+  'Пластик',
+  'Другое'
+]
+
 export default function ArtworkForm({ imageData, onFormDataChange }) {
   const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
   const [width, setWidth] = useState('')
   const [height, setHeight] = useState('')
   const [technique, setTechnique] = useState('')
   const [customTechnique, setCustomTechnique] = useState('')
+  const [material, setMaterial] = useState('')
+  const [customMaterial, setCustomMaterial] = useState('')
+  const [year, setYear] = useState('')
   const [errors, setErrors] = useState({})
   const [showTitleGenerator, setShowTitleGenerator] = useState(false)
   const [generatedTitles, setGeneratedTitles] = useState([])
@@ -66,6 +82,23 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
           delete newErrors.technique
         }
         break
+      case 'author':
+        // Автор не обязателен
+        delete newErrors.author
+        break
+      case 'year':
+        // Год не обязателен, но если введен, проверяем формат
+        if (value.trim().length === 0) {
+          delete newErrors.year
+        } else {
+          const yearNum = parseInt(value)
+          if (isNaN(yearNum) || yearNum < 1000 || yearNum > 9999) {
+            newErrors.year = 'Введите корректный год (4 цифры)'
+          } else {
+            delete newErrors.year
+          }
+        }
+        break
       default:
         break
     }
@@ -80,6 +113,13 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
     setTitle(value)
     validateField('title', value)
     updateFormData({ title: value })
+  }
+
+  const handleAuthorChange = (e) => {
+    const value = e.target.value
+    setAuthor(value)
+    validateField('author', value)
+    updateFormData({ author: value })
   }
 
   const handleWidthChange = (e) => {
@@ -112,14 +152,23 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
     updateFormData({ technique: finalTechnique })
   }
 
+  const handleYearChange = (e) => {
+    const value = e.target.value
+    setYear(value)
+    validateField('year', value)
+    updateFormData({ year: value })
+  }
+
   // Обновление данных формы в родительском компоненте
   const updateFormData = (updates) => {
     if (onFormDataChange) {
       onFormDataChange({
         title: updates.title !== undefined ? updates.title : title,
+        author: updates.author !== undefined ? updates.author : author,
         width: updates.width !== undefined ? updates.width : width,
         height: updates.height !== undefined ? updates.height : height,
-        technique: updates.technique !== undefined ? updates.technique : (technique === 'Другое' ? customTechnique : technique)
+        technique: updates.technique !== undefined ? updates.technique : (technique === 'Другое' ? customTechnique : technique),
+        year: updates.year !== undefined ? updates.year : year
       })
     }
   }
@@ -247,6 +296,24 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
         </div>
       )}
 
+      <div className={styles.formGroup}>
+        <label htmlFor="author" className={styles.label}>
+          Автор
+        </label>
+        <input
+          id="author"
+          type="text"
+          value={author}
+          onChange={handleAuthorChange}
+          onBlur={() => validateField('author', author)}
+          className={`${styles.input} ${errors.author ? styles.inputError : ''}`}
+          placeholder="Введите имя автора"
+        />
+        {errors.author && (
+          <span className={styles.fieldError}>{errors.author}</span>
+        )}
+      </div>
+
       <div className={styles.sizeGroup}>
         <div className={styles.formGroup}>
           <label htmlFor="width" className={styles.label}>
@@ -321,6 +388,26 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
         )}
         {errors.technique && (
           <span className={styles.fieldError}>{errors.technique}</span>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="year" className={styles.label}>
+          Год
+        </label>
+        <input
+          id="year"
+          type="number"
+          value={year}
+          onChange={handleYearChange}
+          onBlur={() => validateField('year', year)}
+          className={`${styles.input} ${errors.year ? styles.inputError : ''}`}
+          placeholder="2023"
+          min="1000"
+          max="9999"
+        />
+        {errors.year && (
+          <span className={styles.fieldError}>{errors.year}</span>
         )}
       </div>
     </div>

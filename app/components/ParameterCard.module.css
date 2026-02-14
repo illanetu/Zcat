@@ -28,6 +28,15 @@
   letter-spacing: 0.02em;
 }
 
+.artworkAuthor {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.5;
+}
+
 .artworkTechnique {
   font-family: var(--font-primary);
   font-size: 1rem;
@@ -39,6 +48,15 @@
 }
 
 .artworkSize {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.artworkYear {
   font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 400;
