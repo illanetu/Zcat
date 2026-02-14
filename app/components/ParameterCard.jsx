@@ -7,14 +7,17 @@ export default function ParameterCard({ title, author, size, techniqueAndMateria
     return null
   }
 
+  const hasYear = year && year.trim().length > 0
+  const hasAuthor = author && author.trim().length > 0
+
   return (
     <div className={styles.card}>
       <div className={styles.cardContent}>
-        {author && <p className={styles.artworkAuthor}>{author}</p>}
+        {hasAuthor && <p className={styles.artworkAuthor}>{author}</p>}
         <h2 className={styles.artworkTitle}>{title}</h2>
         <p className={styles.artworkTechnique}>{techniqueAndMaterial}</p>
         <p className={styles.artworkSize}>{size}</p>
-        {year && <p className={styles.artworkYear}>{year}</p>}
+        {hasYear && <p className={styles.artworkYear}>{year}</p>}
       </div>
     </div>
   )

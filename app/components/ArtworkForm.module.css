@@ -2,27 +2,27 @@
   width: 100%;
   background-color: var(--color-white);
   border-radius: var(--radius-md);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   box-shadow: var(--shadow-sm);
   margin-bottom: var(--spacing-lg);
 }
 
 .formTitle {
-  font-size: 1.5rem;
-  margin-bottom: var(--spacing-lg);
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-md);
   color: var(--color-primary);
   font-weight: 400;
 }
 
 .formGroup {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .label {
   display: block;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--color-text);
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 0.25rem;
   font-weight: 500;
 }
 
@@ -33,10 +33,10 @@
 .input,
 .select {
   width: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0.5rem 0.75rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: inherit;
   color: var(--color-text);
   background-color: var(--color-white);
@@ -66,8 +66,8 @@
 .fieldError {
   display: block;
   color: #c33;
-  font-size: 0.85rem;
-  margin-top: var(--spacing-xs);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
 }
 
 .errorMessage {
@@ -93,11 +93,11 @@
 }
 
 .generateButton {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0.5rem 0.75rem;
   background-color: var(--color-accent);
   color: var(--color-white);
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -117,17 +117,17 @@
 
 /* Генератор названий */
 .titleGenerator {
-  margin-top: var(--spacing-md);
-  padding: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
   background-color: var(--color-secondary);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
 }
 
 .titleGeneratorLabel {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--color-text);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
@@ -163,11 +163,11 @@
 }
 
 .titleOption {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0.4rem 0.75rem;
   background-color: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   color: var(--color-text);
@@ -197,28 +197,57 @@
   color: var(--color-text);
 }
 
-/* Группа размера */
-.sizeGroup {
+/* Группа размера, техники и материала */
+.sizeTechniqueMaterialGroup {
   display: flex;
-  gap: var(--spacing-md);
-  align-items: flex-end;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
 }
 
-.sizeGroup .formGroup {
+.sizeTechniqueMaterialGroup .formGroup {
   flex: 1;
   margin-bottom: 0;
 }
 
 .sizeSeparator {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: var(--color-text-light);
-  padding-bottom: var(--spacing-sm);
+  padding-bottom: 0.5rem;
   font-weight: 300;
+  flex-shrink: 0;
 }
 
 .customInput {
-  margin-top: var(--spacing-sm);
+  margin-top: 0.5rem;
 }
+
+/* Группа названия и года */
+.titleYearGroup {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+}
+
+.titleYearGroup .formGroup:first-child {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.titleYearGroup .formGroup:last-child {
+  flex: 0 0 120px;
+  margin-bottom: 0;
+}
+
+.titleYearGroup .titleInputGroup {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+}
+
+.titleYearGroup .titleInputGroup .input {
+  flex: 1;
+}
+
 
 /* Адаптивность */
 @media (max-width: 768px) {
@@ -234,13 +263,18 @@
     width: 100%;
   }
 
-  .sizeGroup {
+  .sizeTechniqueMaterialGroup {
     flex-direction: column;
     align-items: stretch;
   }
 
   .sizeSeparator {
     display: none;
+  }
+
+  .titleYearGroup {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .titleList {

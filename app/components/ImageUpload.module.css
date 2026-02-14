@@ -68,7 +68,7 @@
 .previewWrapper {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: 300px;
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
@@ -80,7 +80,7 @@
   height: auto;
   display: block;
   object-fit: contain;
-  max-height: 500px;
+  max-height: 250px;
 }
 
 .removeButton {
@@ -188,7 +188,7 @@
   }
 
   .previewImage {
-    max-height: 400px;
+    max-height: 200px;
   }
 }
 
@@ -212,6 +212,6 @@
   }
 
   .previewImage {
-    max-height: 300px;
+    max-height: 150px;
   }
 }

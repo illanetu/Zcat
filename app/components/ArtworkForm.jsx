@@ -269,32 +269,53 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
         )}
       </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="title" className={styles.label}>
-          Название <span className={styles.required}>*</span>
-        </label>
-        <div className={styles.titleInputGroup}>
-          <input
-            id="title"
-            type="text"
-            value={title}
-            onChange={handleTitleChange}
-            onBlur={() => validateField('title', title)}
-            className={`${styles.input} ${errors.title ? styles.inputError : ''}`}
-            placeholder="Введите название произведения"
-          />
-          <button
-            type="button"
-            onClick={handleGenerateTitles}
-            className={styles.generateButton}
-            disabled={!imageData || isGeneratingTitles}
-          >
-            {isGeneratingTitles ? 'Генерация...' : 'Сгенерировать названия'}
-          </button>
+      <div className={styles.titleYearGroup}>
+        <div className={styles.formGroup}>
+          <label htmlFor="title" className={styles.label}>
+            Название <span className={styles.required}>*</span>
+          </label>
+          <div className={styles.titleInputGroup}>
+            <input
+              id="title"
+              type="text"
+              value={title}
+              onChange={handleTitleChange}
+              onBlur={() => validateField('title', title)}
+              className={`${styles.input} ${errors.title ? styles.inputError : ''}`}
+              placeholder="Введите название произведения"
+            />
+            <button
+              type="button"
+              onClick={handleGenerateTitles}
+              className={styles.generateButton}
+              disabled={!imageData || isGeneratingTitles}
+            >
+              {isGeneratingTitles ? 'Генерация...' : 'Сгенерировать названия'}
+            </button>
+          </div>
+          {errors.title && (
+            <span className={styles.fieldError}>{errors.title}</span>
+          )}
         </div>
-        {errors.title && (
-          <span className={styles.fieldError}>{errors.title}</span>
-        )}
+
+        <div className={styles.formGroup}>
+          <label htmlFor="year" className={styles.label}>
+            Год
+          </label>
+          <input
+            id="year"
+            type="number"
+            value={year}
+            onChange={handleYearChange}
+            onBlur={() => validateField('year', year)}
+            className={`${styles.input} ${errors.year ? styles.inputError : ''}`}
+            min="1000"
+            max="9999"
+          />
+          {errors.year && (
+            <span className={styles.fieldError}>{errors.year}</span>
+          )}
+        </div>
       </div>
 
       {showTitleGenerator && (
@@ -329,7 +350,7 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
         </div>
       )}
 
-      <div className={styles.sizeGroup}>
+      <div className={styles.sizeTechniqueMaterialGroup}>
         <div className={styles.formGroup}>
           <label htmlFor="width" className={styles.label}>
             Ширина (см) <span className={styles.required}>*</span>
@@ -371,87 +392,67 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
             <span className={styles.fieldError}>{errors.height}</span>
           )}
         </div>
-      </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="technique" className={styles.label}>
-          Техника <span className={styles.required}>*</span>
-        </label>
-        <select
-          id="technique"
-          value={technique}
-          onChange={handleTechniqueChange}
-          onBlur={() => validateField('technique', finalTechnique)}
-          className={`${styles.select} ${errors.technique ? styles.inputError : ''}`}
-        >
-          <option value="">Выберите технику</option>
-          {TECHNIQUES.map((tech) => (
-            <option key={tech} value={tech}>
-              {tech}
-            </option>
-          ))}
-        </select>
-        {technique === 'Другое' && (
-          <input
-            type="text"
-            value={customTechnique}
-            onChange={handleCustomTechniqueChange}
-            onBlur={() => validateField('technique', customTechnique)}
-            className={`${styles.input} ${styles.customInput} ${errors.technique ? styles.inputError : ''}`}
-            placeholder="Укажите технику"
-          />
-        )}
-        {errors.technique && (
-          <span className={styles.fieldError}>{errors.technique}</span>
-        )}
-      </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="technique" className={styles.label}>
+            Техника <span className={styles.required}>*</span>
+          </label>
+          <select
+            id="technique"
+            value={technique}
+            onChange={handleTechniqueChange}
+            onBlur={() => validateField('technique', finalTechnique)}
+            className={`${styles.select} ${errors.technique ? styles.inputError : ''}`}
+          >
+            <option value="">Выберите технику</option>
+            {TECHNIQUES.map((tech) => (
+              <option key={tech} value={tech}>
+                {tech}
+              </option>
+            ))}
+          </select>
+          {technique === 'Другое' && (
+            <input
+              type="text"
+              value={customTechnique}
+              onChange={handleCustomTechniqueChange}
+              onBlur={() => validateField('technique', customTechnique)}
+              className={`${styles.input} ${styles.customInput} ${errors.technique ? styles.inputError : ''}`}
+              placeholder="Укажите технику"
+            />
+          )}
+          {errors.technique && (
+            <span className={styles.fieldError}>{errors.technique}</span>
+          )}
+        </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="material" className={styles.label}>
-          Материал
-        </label>
-        <select
-          id="material"
-          value={material}
-          onChange={handleMaterialChange}
-          className={styles.select}
-        >
-          <option value="">Выберите материал</option>
-          {MATERIALS.map((mat) => (
-            <option key={mat} value={mat}>
-              {mat}
-            </option>
-          ))}
-        </select>
-        {material === 'Другое' && (
-          <input
-            type="text"
-            value={customMaterial}
-            onChange={handleCustomMaterialChange}
-            className={`${styles.input} ${styles.customInput}`}
-            placeholder="Укажите материал"
-          />
-        )}
-      </div>
-
-      <div className={styles.formGroup}>
-        <label htmlFor="year" className={styles.label}>
-          Год
-        </label>
-        <input
-          id="year"
-          type="number"
-          value={year}
-          onChange={handleYearChange}
-          onBlur={() => validateField('year', year)}
-          className={`${styles.input} ${errors.year ? styles.inputError : ''}`}
-          placeholder="2023"
-          min="1000"
-          max="9999"
-        />
-        {errors.year && (
-          <span className={styles.fieldError}>{errors.year}</span>
-        )}
+        <div className={styles.formGroup}>
+          <label htmlFor="material" className={styles.label}>
+            Материал
+          </label>
+          <select
+            id="material"
+            value={material}
+            onChange={handleMaterialChange}
+            className={styles.select}
+          >
+            <option value="">Выберите материал</option>
+            {MATERIALS.map((mat) => (
+              <option key={mat} value={mat}>
+                {mat}
+              </option>
+            ))}
+          </select>
+          {material === 'Другое' && (
+            <input
+              type="text"
+              value={customMaterial}
+              onChange={handleCustomMaterialChange}
+              className={`${styles.input} ${styles.customInput}`}
+              placeholder="Укажите материал"
+            />
+          )}
+        </div>
       </div>
     </div>
   )
