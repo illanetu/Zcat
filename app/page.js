@@ -4,7 +4,9 @@ import { useState, useMemo } from 'react'
 import ImageUpload from './components/ImageUpload'
 import ArtworkForm from './components/ArtworkForm'
 import ParameterCard from './components/ParameterCard'
+import DescriptionCard from './components/DescriptionCard'
 import { buildParameterCard } from '../lib/card-utils'
+import { generateDescription } from '../lib/ai-client'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -25,6 +27,32 @@ export default function Home() {
 
   const handleFormDataChange = (data) => {
     setFormData(data)
+  }
+
+  const [description, setDescription] = useState('')
+  const [isGeneratingDescription, setIsGeneratingDescription] = useState(false)
+  const [descriptionError, setDescriptionError] = useState(null)
+
+  const handleGenerateDescription = async () => {
+    if (!imageData?.base64) {
+      setDescriptionError('Сначала загрузите изображение')
+      return
+    }
+    if (!formData.title || !formData.width || !formData.height || !formData.technique) {
+      setDescriptionError('Заполните обязательные поля: название, размер, техника')
+      return
+    }
+    setDescriptionError(null)
+    setIsGeneratingDescription(true)
+    setDescription('')
+    try {
+      const text = await generateDescription(imageData.base64, formData)
+      setDescription(text)
+    } catch (err) {
+      setDescriptionError(err.message || 'Не удалось сгенерировать описание')
+    } finally {
+      setIsGeneratingDescription(false)
+    }
   }
 
   // Формируем данные для этикетки параметров
@@ -62,6 +90,21 @@ export default function Home() {
               techniqueAndMaterial={parameterCardData.techniqueAndMaterial}
               year={parameterCardData.year}
             />
+            <div className={styles.descriptionBlock}>
+              <button
+                type="button"
+                onClick={handleGenerateDescription}
+                className={styles.generateDescriptionButton}
+                disabled={!imageData?.base64 || isGeneratingDescription}
+              >
+                {isGeneratingDescription ? 'Генерация...' : 'Сгенерировать описание'}
+              </button>
+              <DescriptionCard
+                description={description}
+                isLoading={isGeneratingDescription}
+                error={descriptionError}
+              />
+            </div>
           </section>
         )}
       </main>
