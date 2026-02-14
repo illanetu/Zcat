@@ -1,8 +1,23 @@
 import { NextResponse } from 'next/server'
 
 /**
+ * Извлекает текст между двумя маркерами (или до конца строки, если endMarker === null)
+ */
+function parseSection(text, startMarker, endMarker) {
+  const startIdx = text.indexOf(startMarker)
+  if (startIdx === -1) return ''
+  const contentStart = startIdx + startMarker.length
+  const slice = text.slice(contentStart).trimStart()
+  if (!endMarker) return slice.trim()
+  const endIdx = slice.indexOf(endMarker)
+  if (endIdx === -1) return slice.trim()
+  return slice.slice(0, endIdx).trim()
+}
+
+/**
  * API Route для генерации описания произведения искусства с помощью AI
  * POST /api/generate-description
+ * Возвращает: { description, descriptionPoetic }
  */
 export async function POST(request) {
   try {
@@ -73,14 +88,22 @@ export async function POST(request) {
         messages: [
           {
             role: 'system',
-            content: 'Ты эксперт по искусству. Твоя задача — написать краткое описание произведения искусства для каталога галереи или выставки. Описание должно быть лаконичным (2–5 предложений), передавать атмосферу и суть произведения, упоминать композицию, цвет, настроение. Стиль — нейтральный, профессиональный, без лишних эпитетов. Пиши только текст описания, без заголовков и подписей.'
+            content: `Ты эксперт по искусству. Напиши два варианта описания произведения искусства.
+
+Формат ответа — строго такой (сохраняй заголовки строкой ниже):
+
+ОПИСАНИЕ:
+[Первый вариант: лаконичное описание для каталога галереи, 2–5 предложений. Стиль нейтральный, профессиональный. Композиция, цвет, настроение.]
+
+АТМОСФЕРНОЕ ОПИСАНИЕ:
+[Второй вариант: атмосферное, поэтичное, литературное описание. Тот же объём. Образный язык, метафоры, настроение — как в тексте для альбома или эссе об искусстве.]`
           },
           {
             role: 'user',
             content: [
               {
                 type: 'text',
-                text: `${contextText}Проанализируй изображение произведения искусства и напиши краткое описание для каталога.`
+                text: `${contextText}Проанализируй изображение и напиши оба варианта описания в указанном формате.`
               },
               {
                 type: 'image_url',
@@ -91,7 +114,7 @@ export async function POST(request) {
             ]
           }
         ],
-        max_tokens: 400,
+        max_tokens: 700,
         temperature: 0.6,
       }),
     })
@@ -107,16 +130,22 @@ export async function POST(request) {
     }
 
     const data = await response.json()
-    const description = data.choices?.[0]?.message?.content?.trim()
+    const raw = data.choices?.[0]?.message?.content?.trim()
 
-    if (!description) {
+    if (!raw) {
       return NextResponse.json(
         { error: 'Не удалось получить описание от AI' },
         { status: 500 }
       )
     }
 
-    return NextResponse.json({ description })
+    const description = parseSection(raw, 'ОПИСАНИЕ:', 'АТМОСФЕРНОЕ ОПИСАНИЕ:')
+    const descriptionPoetic = parseSection(raw, 'АТМОСФЕРНОЕ ОПИСАНИЕ:', null)
+
+    return NextResponse.json({
+      description: description || raw,
+      descriptionPoetic: descriptionPoetic || ''
+    })
   } catch (error) {
     console.error('Ошибка при генерации описания:', error)
     return NextResponse.json(

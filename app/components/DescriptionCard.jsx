@@ -2,7 +2,7 @@
 
 import styles from './DescriptionCard.module.css'
 
-export default function DescriptionCard({ description, isLoading, error }) {
+export default function DescriptionCard({ description, descriptionPoetic, isLoading, error }) {
   if (error) {
     return (
       <div className={styles.card}>
@@ -28,16 +28,30 @@ export default function DescriptionCard({ description, isLoading, error }) {
     )
   }
 
-  if (!description || description.trim().length === 0) {
+  const hasStandard = description && description.trim().length > 0
+  const hasPoetic = descriptionPoetic && descriptionPoetic.trim().length > 0
+  if (!hasStandard && !hasPoetic) {
     return null
   }
 
   return (
-    <div className={styles.card}>
-      <div className={styles.cardContent}>
-        <h3 className={styles.cardTitle}>Описание</h3>
-        <p className={styles.description}>{description}</p>
-      </div>
-    </div>
+    <>
+      {hasStandard && (
+        <div className={styles.card}>
+          <div className={styles.cardContent}>
+            <h3 className={styles.cardTitle}>Описание</h3>
+            <p className={styles.description}>{description}</p>
+          </div>
+        </div>
+      )}
+      {hasPoetic && (
+        <div className={styles.card}>
+          <div className={styles.cardContent}>
+            <h3 className={styles.cardTitlePoetic}>Атмосферное описание</h3>
+            <p className={styles.descriptionPoetic}>{descriptionPoetic}</p>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

@@ -30,6 +30,7 @@ export default function Home() {
   }
 
   const [description, setDescription] = useState('')
+  const [descriptionPoetic, setDescriptionPoetic] = useState('')
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false)
   const [descriptionError, setDescriptionError] = useState(null)
 
@@ -45,9 +46,11 @@ export default function Home() {
     setDescriptionError(null)
     setIsGeneratingDescription(true)
     setDescription('')
+    setDescriptionPoetic('')
     try {
-      const text = await generateDescription(imageData.base64, formData)
-      setDescription(text)
+      const { description: d, descriptionPoetic: dp } = await generateDescription(imageData.base64, formData)
+      setDescription(d)
+      setDescriptionPoetic(dp)
     } catch (err) {
       setDescriptionError(err.message || 'Не удалось сгенерировать описание')
     } finally {
@@ -101,6 +104,7 @@ export default function Home() {
               </button>
               <DescriptionCard
                 description={description}
+                descriptionPoetic={descriptionPoetic}
                 isLoading={isGeneratingDescription}
                 error={descriptionError}
               />

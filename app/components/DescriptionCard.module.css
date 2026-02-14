@@ -28,7 +28,8 @@
   padding-bottom: var(--spacing-sm);
 }
 
-.description {
+.description,
+.descriptionPoetic {
   font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 400;
@@ -37,6 +38,21 @@
   line-height: 1.7;
   text-align: left;
   white-space: pre-line;
+}
+
+.descriptionPoetic {
+  font-style: italic;
+}
+
+.cardTitlePoetic {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin: 0;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--spacing-sm);
 }
 
 .loading {
@@ -82,11 +98,13 @@
     padding: var(--spacing-lg) var(--spacing-md);
   }
 
-  .cardTitle {
+  .cardTitle,
+  .cardTitlePoetic {
     font-size: 1.15rem;
   }
 
-  .description {
+  .description,
+  .descriptionPoetic {
     font-size: 0.95rem;
   }
 }
@@ -96,11 +114,13 @@
     padding: var(--spacing-md) var(--spacing-sm);
   }
 
-  .cardTitle {
+  .cardTitle,
+  .cardTitlePoetic {
     font-size: 1.1rem;
   }
 
-  .description {
+  .description,
+  .descriptionPoetic {
     font-size: 0.9rem;
   }
 }
