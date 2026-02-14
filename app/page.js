@@ -75,21 +75,24 @@ export default function Home() {
             <ImageUpload onImageSelect={handleImageSelect} />
           </section>
           <section className={styles.formSection}>
+            <h2 className={styles.sectionTitle}>Данные произведения</h2>
             <ArtworkForm
               imageData={imageData}
               onFormDataChange={handleFormDataChange}
-              showTitle={true}
+              showTitle={false}
             />
-            <div className={styles.generateDescriptionWrap}>
-              <button
-                type="button"
-                onClick={handleGenerateDescription}
-                className={styles.generateDescriptionButton}
-                disabled={!imageData?.base64 || isGeneratingDescription}
-              >
-                {isGeneratingDescription ? 'Генерация...' : 'Сгенерировать описание'}
-              </button>
-            </div>
+            {parameterCardData && (
+              <div className={styles.generateDescriptionWrap}>
+                <button
+                  type="button"
+                  onClick={handleGenerateDescription}
+                  className={styles.generateDescriptionButton}
+                  disabled={!imageData?.base64 || isGeneratingDescription}
+                >
+                  {isGeneratingDescription ? 'Генерация...' : 'Сгенерировать описание'}
+                </button>
+              </div>
+            )}
           </section>
           <section className={styles.parameterSection}>
             <h2 className={styles.sectionTitle}>Этикетка</h2>

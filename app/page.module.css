@@ -42,10 +42,8 @@
   min-width: 0;
 }
 
-/* Отступ сверху = высота заголовка секции, чтобы верх формы совпадал с верхом блока загрузки и этикетки */
 .formSection {
   min-width: 0;
-  padding-top: calc(1.1rem * 1.25 + var(--spacing-sm));
 }
 
 .generateDescriptionWrap {
