@@ -15,6 +15,7 @@ export default function Home() {
     width: '',
     height: '',
     technique: '',
+    material: '',
     year: ''
   })
 
@@ -58,7 +59,7 @@ export default function Home() {
               title={parameterCardData.title}
               author={parameterCardData.author}
               size={parameterCardData.size}
-              technique={parameterCardData.technique}
+              techniqueAndMaterial={parameterCardData.techniqueAndMaterial}
               year={parameterCardData.year}
             />
           </section>

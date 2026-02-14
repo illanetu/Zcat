@@ -152,6 +152,20 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
     updateFormData({ technique: finalTechnique })
   }
 
+  const handleMaterialChange = (e) => {
+    const value = e.target.value
+    setMaterial(value)
+    setCustomMaterial('')
+    updateFormData({ material: value === 'Другое' ? '' : value })
+  }
+
+  const handleCustomMaterialChange = (e) => {
+    const value = e.target.value
+    setCustomMaterial(value)
+    const finalMaterial = value.trim() || ''
+    updateFormData({ material: finalMaterial })
+  }
+
   const handleYearChange = (e) => {
     const value = e.target.value
     setYear(value)
@@ -168,6 +182,7 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
         width: updates.width !== undefined ? updates.width : width,
         height: updates.height !== undefined ? updates.height : height,
         technique: updates.technique !== undefined ? updates.technique : (technique === 'Другое' ? customTechnique : technique),
+        material: updates.material !== undefined ? updates.material : (material === 'Другое' ? customMaterial : material),
         year: updates.year !== undefined ? updates.year : year
       })
     }
@@ -237,6 +252,24 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
       )}
 
       <div className={styles.formGroup}>
+        <label htmlFor="author" className={styles.label}>
+          Автор
+        </label>
+        <input
+          id="author"
+          type="text"
+          value={author}
+          onChange={handleAuthorChange}
+          onBlur={() => validateField('author', author)}
+          className={`${styles.input} ${errors.author ? styles.inputError : ''}`}
+          placeholder="Введите имя автора"
+        />
+        {errors.author && (
+          <span className={styles.fieldError}>{errors.author}</span>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
         <label htmlFor="title" className={styles.label}>
           Название <span className={styles.required}>*</span>
         </label>
@@ -295,24 +328,6 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
           </button>
         </div>
       )}
-
-      <div className={styles.formGroup}>
-        <label htmlFor="author" className={styles.label}>
-          Автор
-        </label>
-        <input
-          id="author"
-          type="text"
-          value={author}
-          onChange={handleAuthorChange}
-          onBlur={() => validateField('author', author)}
-          className={`${styles.input} ${errors.author ? styles.inputError : ''}`}
-          placeholder="Введите имя автора"
-        />
-        {errors.author && (
-          <span className={styles.fieldError}>{errors.author}</span>
-        )}
-      </div>
 
       <div className={styles.sizeGroup}>
         <div className={styles.formGroup}>
@@ -388,6 +403,34 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
         )}
         {errors.technique && (
           <span className={styles.fieldError}>{errors.technique}</span>
+        )}
+      </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="material" className={styles.label}>
+          Материал
+        </label>
+        <select
+          id="material"
+          value={material}
+          onChange={handleMaterialChange}
+          className={styles.select}
+        >
+          <option value="">Выберите материал</option>
+          {MATERIALS.map((mat) => (
+            <option key={mat} value={mat}>
+              {mat}
+            </option>
+          ))}
+        </select>
+        {material === 'Другое' && (
+          <input
+            type="text"
+            value={customMaterial}
+            onChange={handleCustomMaterialChange}
+            className={`${styles.input} ${styles.customInput}`}
+            placeholder="Укажите материал"
+          />
         )}
       </div>
 
