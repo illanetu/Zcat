@@ -30,7 +30,7 @@ const MATERIALS = [
   'Другое'
 ]
 
-export default function ArtworkForm({ imageData, onFormDataChange }) {
+export default function ArtworkForm({ imageData, onFormDataChange, showTitle = true }) {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [width, setWidth] = useState('')
@@ -243,8 +243,10 @@ export default function ArtworkForm({ imageData, onFormDataChange }) {
 
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.formTitle}>Данные произведения</h2>
-      
+      {showTitle && (
+        <h2 className={styles.formTitle}>Данные произведения</h2>
+      )}
+
       {errors.general && (
         <div className={styles.errorMessage} role="alert">
           {errors.general}

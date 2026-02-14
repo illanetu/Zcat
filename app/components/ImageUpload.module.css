@@ -114,6 +114,14 @@
   word-break: break-word;
 }
 
+.buttonsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
 .changeButton {
   padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--color-accent);

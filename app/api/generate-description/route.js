@@ -114,7 +114,7 @@ export async function POST(request) {
             ]
           }
         ],
-        max_tokens: 700,
+        max_tokens: 650,
         temperature: 0.6,
       }),
     })

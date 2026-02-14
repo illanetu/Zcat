@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback } from 'react'
 import styles from './ImageUpload.module.css'
 
-export default function ImageUpload({ onImageSelect }) {
+export default function ImageUpload({ onImageSelect, children }) {
   const [image, setImage] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
   const [imageBase64, setImageBase64] = useState(null)
@@ -215,12 +215,15 @@ export default function ImageUpload({ onImageSelect }) {
             </button>
           </div>
           <p className={styles.imageName}>{image.name}</p>
-          <button
-            className={styles.changeButton}
-            onClick={handleClick}
-          >
-            Выбрать другое изображение
-          </button>
+          <div className={styles.buttonsRow}>
+            <button
+              className={styles.changeButton}
+              onClick={handleClick}
+            >
+              Выбрать другое изображение
+            </button>
+            {children}
+          </div>
         </div>
       )}
       

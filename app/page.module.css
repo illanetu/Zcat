@@ -21,39 +21,73 @@
 
 .appMain {
   flex: 1;
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
   padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* 1-я строка: выравнивание по верхнему краю формы, кнопка под формой по центру */
+.row1 {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  gap: var(--spacing-md);
+  align-items: start;
 }
 
 .uploadSection {
-  width: 100%;
-  margin-bottom: var(--spacing-lg);
+  min-width: 0;
 }
 
+/* Отступ сверху = высота заголовка секции, чтобы верх формы совпадал с верхом блока загрузки и этикетки */
 .formSection {
-  width: 100%;
-  margin-bottom: var(--spacing-lg);
+  min-width: 0;
+  padding-top: calc(1.1rem * 1.25 + var(--spacing-sm));
 }
 
-.cardsSection {
-  width: 100%;
+.generateDescriptionWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-sm);
 }
 
-.descriptionBlock {
-  margin-top: var(--spacing-lg);
+.parameterSection {
+  min-width: 0;
+}
+
+/* Размер блока этикетки как у превью изображения (300×250) */
+.parameterCardWrap {
+  width: 300px;
+  min-height: 250px;
+  display: flex;
+  align-items: stretch;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* 2-я строка: кнопка и два описания (максимально близко к 1-й строке) */
+.row2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .generateDescriptionButton {
-  display: block;
-  margin: 0 auto var(--spacing-md);
-  padding: 0.6rem 1.25rem;
+  align-self: center;
+  padding: 0.5rem 1rem;
   background-color: var(--color-accent);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: var(--font-secondary);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -70,25 +104,46 @@
   cursor: not-allowed;
 }
 
-.sectionTitle {
-  font-size: 1.5rem;
-  margin-bottom: var(--spacing-md);
-  color: var(--color-primary);
-  font-weight: 400;
+.descriptionsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  min-width: 0;
+}
+
+.descriptionsRow > * {
+  min-width: 0;
 }
 
 /* Адаптивность */
+@media (max-width: 900px) {
+  .row1 {
+    grid-template-columns: 1fr;
+  }
+
+  .parameterCardWrap {
+    width: 100%;
+    max-width: 300px;
+    min-height: 200px;
+  }
+
+  .descriptionsRow {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .appHeader {
     padding: var(--spacing-sm) var(--spacing-md);
   }
-  
+
   .appHeader h1 {
     font-size: 1.5rem;
   }
-  
+
   .appMain {
     padding: var(--spacing-md);
+    gap: 0.15rem;
   }
 }
 
@@ -96,7 +151,7 @@
   .appHeader h1 {
     font-size: 1.25rem;
   }
-  
+
   .appMain {
     padding: var(--spacing-sm);
   }

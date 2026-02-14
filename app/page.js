@@ -69,31 +69,18 @@ export default function Home() {
         <h1>Генератор описания для каталогов и выставок</h1>
       </header>
       <main className={styles.appMain}>
-        <section className={styles.uploadSection}>
-          <h2 className={styles.sectionTitle}>Загрузка изображения</h2>
-          <ImageUpload onImageSelect={handleImageSelect} />
-        </section>
-        
-        {imageData && (
+        <div className={styles.row1}>
+          <section className={styles.uploadSection}>
+            <h2 className={styles.sectionTitle}>Загрузка изображения</h2>
+            <ImageUpload onImageSelect={handleImageSelect} />
+          </section>
           <section className={styles.formSection}>
-            <ArtworkForm 
+            <ArtworkForm
               imageData={imageData}
               onFormDataChange={handleFormDataChange}
+              showTitle={true}
             />
-          </section>
-        )}
-
-        {parameterCardData && (
-          <section className={styles.cardsSection}>
-            <h2 className={styles.sectionTitle}>Этикетка</h2>
-            <ParameterCard 
-              title={parameterCardData.title}
-              author={parameterCardData.author}
-              size={parameterCardData.size}
-              techniqueAndMaterial={parameterCardData.techniqueAndMaterial}
-              year={parameterCardData.year}
-            />
-            <div className={styles.descriptionBlock}>
+            <div className={styles.generateDescriptionWrap}>
               <button
                 type="button"
                 onClick={handleGenerateDescription}
@@ -102,15 +89,34 @@ export default function Home() {
               >
                 {isGeneratingDescription ? 'Генерация...' : 'Сгенерировать описание'}
               </button>
-              <DescriptionCard
-                description={description}
-                descriptionPoetic={descriptionPoetic}
-                isLoading={isGeneratingDescription}
-                error={descriptionError}
-              />
             </div>
           </section>
-        )}
+          <section className={styles.parameterSection}>
+            <h2 className={styles.sectionTitle}>Этикетка</h2>
+            <div className={styles.parameterCardWrap}>
+              {parameterCardData && (
+                <ParameterCard
+                  title={parameterCardData.title}
+                  author={parameterCardData.author}
+                  size={parameterCardData.size}
+                  techniqueAndMaterial={parameterCardData.techniqueAndMaterial}
+                  year={parameterCardData.year}
+                />
+              )}
+            </div>
+          </section>
+        </div>
+
+        <div className={styles.row2}>
+          <div className={styles.descriptionsRow}>
+            <DescriptionCard
+              description={description}
+              descriptionPoetic={descriptionPoetic}
+              isLoading={isGeneratingDescription}
+              error={descriptionError}
+            />
+          </div>
+        </div>
       </main>
     </div>
   )
