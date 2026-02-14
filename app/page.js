@@ -1,17 +1,14 @@
-import React from 'react'
-import './styles/App.css'
+import styles from './page.module.css'
 
-function App() {
+export default function Home() {
   return (
-    <div className="app">
-      <header className="app-header">
+    <div className={styles.app}>
+      <header className={styles.appHeader}>
         <h1>Генератор карточек для каталогов и выставок</h1>
       </header>
-      <main className="app-main">
+      <main className={styles.appMain}>
         <p>Приложение готово к разработке</p>
       </main>
     </div>
   )
 }
-
-export default App
