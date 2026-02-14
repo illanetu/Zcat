@@ -27,6 +27,17 @@
   padding: var(--spacing-lg);
 }
 
+.uploadSection {
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
   .appHeader {
