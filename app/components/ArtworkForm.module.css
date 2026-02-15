@@ -217,6 +217,10 @@
   margin-bottom: 0;
 }
 
+.sizeTechniqueMaterialGroup .sizeFieldGroup {
+  flex: 0.7 1 0%;
+}
+
 .sizeSeparator {
   font-size: 1.25rem;
   color: var(--color-text-light);

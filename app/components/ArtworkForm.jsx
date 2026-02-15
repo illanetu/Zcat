@@ -338,7 +338,7 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
       </div>
 
       <div className={styles.sizeTechniqueMaterialGroup}>
-        <div className={styles.formGroup}>
+        <div className={`${styles.formGroup} ${styles.sizeFieldGroup}`}>
           <label htmlFor="width" className={styles.label}>
             {t('form.width')} <span className={styles.required}>{t('form.required')}</span>
           </label>
@@ -360,7 +360,7 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
 
         <div className={styles.sizeSeparator}>×</div>
 
-        <div className={styles.formGroup}>
+        <div className={`${styles.formGroup} ${styles.sizeFieldGroup}`}>
           <label htmlFor="height" className={styles.label}>
             {t('form.height')} <span className={styles.required}>{t('form.required')}</span>
           </label>

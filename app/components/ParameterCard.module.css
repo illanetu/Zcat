@@ -30,12 +30,20 @@
 
 .artworkTitle {
   font-family: var(--font-primary);
-  font-size: 2rem;
+  font-size: 1.6rem; /* 80% от 2rem */
   font-weight: 700;
   color: var(--color-primary);
   margin: 0 0 var(--spacing-md) 0;
   line-height: 1.2;
   letter-spacing: 0.02em;
+}
+
+.artworkTitle::before {
+  content: '«';
+}
+
+.artworkTitle::after {
+  content: '»';
 }
 
 .artworkAuthor {
@@ -87,7 +95,7 @@
   }
 
   .artworkTitle {
-    font-size: 1.75rem;
+    font-size: 1.4rem; /* 80% от 1.75rem */
   }
 
   .artworkTechnique,
@@ -102,7 +110,7 @@
   }
 
   .artworkTitle {
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* 80% от 1.5rem */
   }
 
   .artworkTechnique,
