@@ -57,14 +57,16 @@
   min-width: 0;
 }
 
+.parameterSection {
+  min-width: 0;
+}
+
+/* На десктопе кнопка во второй колонке (под формой); в мобильной версии — после этикетки по порядку в DOM */
 .generateDescriptionWrap {
   display: flex;
   justify-content: center;
   margin-top: var(--spacing-sm);
-}
-
-.parameterSection {
-  min-width: 0;
+  grid-column: 2;
 }
 
 /* Размер блока этикетки как у превью изображения (300×250) */
@@ -174,9 +176,14 @@
     align-items: stretch;
   }
 
+  .generateDescriptionWrap {
+    grid-column: 1;
+  }
+
   .uploadSection,
   .formSection,
-  .parameterSection {
+  .parameterSection,
+  .generateDescriptionWrap {
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;

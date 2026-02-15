@@ -106,18 +106,6 @@ export default function Home() {
               onFormDataChange={handleFormDataChange}
               showTitle={false}
             />
-            {parameterCardData && (
-              <div className={styles.generateDescriptionWrap}>
-                <button
-                  type="button"
-                  onClick={handleGenerateDescription}
-                  className={styles.generateDescriptionButton}
-                  disabled={!imageData?.base64 || isGeneratingDescription}
-                >
-                  {isGeneratingDescription ? t('button.generating') : t('button.generateDescription')}
-                </button>
-              </div>
-            )}
           </section>
           <section className={styles.parameterSection}>
             <h2 className={styles.sectionTitle}>{t('section.label')}</h2>
@@ -133,6 +121,18 @@ export default function Home() {
               )}
             </div>
           </section>
+          {parameterCardData && (
+            <div className={styles.generateDescriptionWrap}>
+              <button
+                type="button"
+                onClick={handleGenerateDescription}
+                className={styles.generateDescriptionButton}
+                disabled={!imageData?.base64 || isGeneratingDescription}
+              >
+                {isGeneratingDescription ? t('button.generating') : t('button.generateDescription')}
+              </button>
+            </div>
+          )}
         </div>
 
         <div className={styles.row2}>
