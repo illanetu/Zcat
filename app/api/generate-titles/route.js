@@ -6,7 +6,10 @@ import { NextResponse } from 'next/server'
  */
 export async function POST(request) {
   try {
-    const { image } = await request.json()
+    const { image, locale = 'ru' } = await request.json()
+    const langInstruction = locale === 'en'
+      ? 'Respond in English only.'
+      : 'Отвечай только на русском.'
 
     if (!image) {
       return NextResponse.json(
@@ -70,14 +73,14 @@ export async function POST(request) {
         messages: [
           {
             role: 'system',
-            content: 'Эксперт по искусству. Предложи 5 кратких названий (1-2 слова) для произведения. Стиль: символичный, эмоциональный, для каталога галереи. Только список, без нумерации.'
+            content: `Эксперт по искусству. Предложи 5 кратких названий (1-2 слова) для произведения. Стиль: символичный, эмоциональный, для каталога галереи. Только список, без нумерации. ${langInstruction}`
           },
           {
             role: 'user',
             content: [
               {
                 type: 'text',
-                text: '5 названий для каталога:'
+                text: locale === 'en' ? '5 titles for the catalog:' : '5 названий для каталога:'
               },
               {
                 type: 'image_url',

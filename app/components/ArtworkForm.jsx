@@ -7,7 +7,7 @@ import { TECHNIQUE_KEYS, MATERIAL_KEYS } from '../../lib/form-options'
 import styles from './ArtworkForm.module.css'
 
 export default function ArtworkForm({ imageData, onFormDataChange, showTitle = true }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [width, setWidth] = useState('')
@@ -196,7 +196,7 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
     setErrors({ ...errors, general: null })
 
     try {
-      const titles = await generateTitles(imageData.base64)
+      const titles = await generateTitles(imageData.base64, i18n.language)
 
       if (titles && titles.length > 0) {
         setGeneratedTitles(titles)
