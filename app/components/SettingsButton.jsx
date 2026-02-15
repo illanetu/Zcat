@@ -1,10 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from './SettingsButton.module.css'
 
 export default function SettingsButton() {
+  const { t, i18n } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
+
+  const handleLanguageChange = (e) => {
+    const value = e.target.value
+    i18n.changeLanguage(value)
+  }
 
   const togglePanel = () => {
     setIsOpen((prev) => !prev)
@@ -18,51 +25,54 @@ export default function SettingsButton() {
         className={styles.button}
         aria-expanded={isOpen}
         aria-haspopup="true"
-        aria-label="Настройки"
-        title="Настройки"
+        aria-label={t('settings.title')}
+        title={t('settings.title')}
       >
         <span className={styles.icon} aria-hidden="true">
           ⚙
         </span>
-        <span className={styles.label}>Настройки</span>
+        <span className={styles.label}>{t('settings.title')}</span>
       </button>
       {isOpen && (
         <div
           className={styles.panel}
           role="dialog"
-          aria-label="Панель настроек"
+          aria-label={t('settings.panelLabel')}
         >
           <div className={styles.panelHeader}>
-            <h3 className={styles.panelTitle}>Настройки</h3>
+            <h3 className={styles.panelTitle}>{t('settings.title')}</h3>
             <button
               type="button"
               onClick={togglePanel}
               className={styles.closeButton}
-              aria-label="Закрыть настройки"
+              aria-label={t('settings.close')}
             >
               ×
             </button>
           </div>
           <div className={styles.panelContent}>
-            {/* Структура для будущих настроек */}
             <div className={styles.settingGroup}>
-              <label className={styles.settingLabel}>Язык</label>
-              <select className={styles.settingSelect} disabled aria-label="Выбор языка">
-                <option value="ru">Русский</option>
-                <option value="en">English</option>
+              <label className={styles.settingLabel}>{t('settings.language')}</label>
+              <select
+                className={styles.settingSelect}
+                value={i18n.language}
+                onChange={handleLanguageChange}
+                aria-label={t('settings.languageChoice')}
+              >
+                <option value="ru">{t('settings.langRu')}</option>
+                <option value="en">{t('settings.langEn')}</option>
               </select>
-              <span className={styles.comingSoon}>Скоро</span>
             </div>
             <div className={styles.settingGroup}>
-              <label className={styles.settingLabel}>Стиль описания</label>
-              <select className={styles.settingSelect} disabled aria-label="Стиль описания">
-                <option value="neutral">Нейтральный</option>
-                <option value="poetic">Поэтический</option>
-                <option value="catalog">Каталог</option>
+              <label className={styles.settingLabel}>{t('settings.descriptionStyle')}</label>
+              <select className={styles.settingSelect} disabled aria-label={t('settings.descriptionStyle')}>
+                <option value="neutral">{t('settings.styleNeutral')}</option>
+                <option value="poetic">{t('settings.stylePoetic')}</option>
+                <option value="catalog">{t('settings.styleCatalog')}</option>
               </select>
-              <span className={styles.comingSoon}>Скоро</span>
+              <span className={styles.comingSoon}>{t('button.soon')}</span>
             </div>
-            <p className={styles.stubHint}>Дополнительные настройки будут добавлены позже.</p>
+            <p className={styles.stubHint}>{t('settings.moreLater')}</p>
           </div>
         </div>
       )}

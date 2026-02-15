@@ -1,0 +1,116 @@
+{
+  "app": {
+    "title": "Генератор описания для каталогов и выставок",
+    "metaTitle": "Генератор карточек для каталогов",
+    "metaDescription": "Генератор карточек для каталогов и выставок"
+  },
+  "section": {
+    "uploadImage": "Загрузка изображения",
+    "artworkData": "Данные произведения",
+    "label": "Этикетка"
+  },
+  "button": {
+    "generateDescription": "Сгенерировать описание",
+    "generating": "Генерация...",
+    "copy": "Копировать текст",
+    "copied": "Скопировано",
+    "share": "Поделиться",
+    "soon": "Скоро",
+    "cancel": "Отмена",
+    "chooseOtherImage": "Выбрать другое изображение"
+  },
+  "settings": {
+    "title": "Настройки",
+    "panelLabel": "Панель настроек",
+    "close": "Закрыть настройки",
+    "language": "Язык",
+    "languageChoice": "Выбор языка",
+    "langRu": "Русский",
+    "langEn": "English",
+    "descriptionStyle": "Стиль описания",
+    "styleNeutral": "Нейтральный",
+    "stylePoetic": "Поэтический",
+    "styleCatalog": "Каталог",
+    "moreLater": "Дополнительные настройки будут добавлены позже."
+  },
+  "form": {
+    "artworkData": "Данные произведения",
+    "author": "Автор",
+    "title": "Название",
+    "year": "Год",
+    "width": "Ширина (см)",
+    "height": "Высота (см)",
+    "technique": "Техника",
+    "material": "Материал",
+    "placeholderAuthor": "Введите имя автора",
+    "placeholderTitle": "Введите название произведения",
+    "placeholderYear": "0",
+    "placeholderTechnique": "Укажите технику",
+    "placeholderMaterial": "Укажите материал",
+    "selectTechnique": "Выберите технику",
+    "selectMaterial": "Выберите материал",
+    "generateTitles": "Сгенерировать названия",
+    "chooseTitle": "Выберите одно из предложенных названий:",
+    "generatingTitles": "Генерация названий...",
+    "required": "*",
+    "errorTitleRequired": "Название обязательно для заполнения",
+    "errorWidthRequired": "Ширина обязательна для заполнения",
+    "errorWidthInvalid": "Введите корректное число",
+    "errorHeightRequired": "Высота обязательна для заполнения",
+    "errorHeightInvalid": "Введите корректное число",
+    "errorTechniqueRequired": "Техника обязательна для заполнения",
+    "errorYearInvalid": "Введите корректный год (4 цифры)",
+    "errorUploadFirst": "Сначала загрузите изображение",
+    "errorTitlesFailed": "Не удалось сгенерировать названия. Попробуйте еще раз.",
+    "errorTitlesApi": "Ошибка при генерации названий. Проверьте настройки API."
+  },
+  "techniques": {
+    "oil": "Масло",
+    "watercolor": "Акварель",
+    "acrylic": "Акрил",
+    "gouache": "Гуашь",
+    "tempera": "Темпера",
+    "pastel": "Пастель",
+    "charcoal": "Уголь",
+    "pencil": "Карандаш",
+    "digital": "Цифровое изображение",
+    "mixed": "Смешанная техника",
+    "other": "Другое"
+  },
+  "materials": {
+    "canvas": "Холст",
+    "paper": "Бумага",
+    "cardboard": "Картон",
+    "wood": "Дерево",
+    "metal": "Металл",
+    "glass": "Стекло",
+    "fabric": "Ткань",
+    "plastic": "Пластик",
+    "other": "Другое"
+  },
+  "upload": {
+    "dragOrClick": "Перетащите изображение сюда или нажмите для выбора",
+    "formats": "Поддерживаются форматы: JPG, PNG (макс. 10MB)",
+    "loading": "Загрузка изображения...",
+    "previewAlt": "Превью",
+    "removeImage": "Удалить изображение",
+    "errorNoFile": "Файл не выбран",
+    "errorFormat": "Неподдерживаемый формат. Используйте JPG или PNG",
+    "errorSize": "Файл слишком большой. Максимальный размер: 10MB",
+    "errorProcess": "Ошибка при обработке изображения",
+    "errorRead": "Ошибка при чтении файла",
+    "errorAbort": "Чтение файла было прервано"
+  },
+  "description": {
+    "title": "Описание",
+    "poeticTitle": "Атмосферное описание",
+    "generating": "Генерация описания..."
+  },
+  "card": {
+    "defaultTitle": "Карточка произведения"
+  },
+  "errors": {
+    "descriptionRequired": "Заполните обязательные поля: название, размер, техника",
+    "descriptionFailed": "Не удалось сгенерировать описание"
+  }
+}

@@ -1,8 +1,11 @@
 'use client'
 
+import { useTranslation } from 'react-i18next'
 import styles from './DescriptionCard.module.css'
 
 export default function DescriptionCard({ description, descriptionPoetic, isLoading, error }) {
+  const { t } = useTranslation()
+
   if (error) {
     return (
       <div className={styles.card}>
@@ -21,7 +24,7 @@ export default function DescriptionCard({ description, descriptionPoetic, isLoad
         <div className={styles.cardContent}>
           <div className={styles.loading}>
             <div className={styles.spinner} aria-hidden="true" />
-            <span>Генерация описания...</span>
+            <span>{t('description.generating')}</span>
           </div>
         </div>
       </div>
@@ -39,7 +42,7 @@ export default function DescriptionCard({ description, descriptionPoetic, isLoad
       {hasStandard && (
         <div className={styles.card}>
           <div className={styles.cardContent}>
-            <h3 className={styles.cardTitle}>Описание</h3>
+            <h3 className={styles.cardTitle}>{t('description.title')}</h3>
             <p className={styles.description}>{description}</p>
           </div>
         </div>
@@ -47,7 +50,7 @@ export default function DescriptionCard({ description, descriptionPoetic, isLoad
       {hasPoetic && (
         <div className={styles.card}>
           <div className={styles.cardContent}>
-            <h3 className={styles.cardTitlePoetic}>Атмосферное описание</h3>
+            <h3 className={styles.cardTitlePoetic}>{t('description.poeticTitle')}</h3>
             <p className={styles.descriptionPoetic}>{descriptionPoetic}</p>
           </div>
         </div>

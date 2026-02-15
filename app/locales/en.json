@@ -1,0 +1,116 @@
+{
+  "app": {
+    "title": "Description generator for catalogs and exhibitions",
+    "metaTitle": "Catalog card generator",
+    "metaDescription": "Generator for catalog and exhibition cards"
+  },
+  "section": {
+    "uploadImage": "Image upload",
+    "artworkData": "Artwork data",
+    "label": "Label"
+  },
+  "button": {
+    "generateDescription": "Generate description",
+    "generating": "Generating...",
+    "copy": "Copy text",
+    "copied": "Copied",
+    "share": "Share",
+    "soon": "Soon",
+    "cancel": "Cancel",
+    "chooseOtherImage": "Choose another image"
+  },
+  "settings": {
+    "title": "Settings",
+    "panelLabel": "Settings panel",
+    "close": "Close settings",
+    "language": "Language",
+    "languageChoice": "Choose language",
+    "langRu": "Russian",
+    "langEn": "English",
+    "descriptionStyle": "Description style",
+    "styleNeutral": "Neutral",
+    "stylePoetic": "Poetic",
+    "styleCatalog": "Catalog",
+    "moreLater": "More options will be added later."
+  },
+  "form": {
+    "artworkData": "Artwork data",
+    "author": "Author",
+    "title": "Title",
+    "year": "Year",
+    "width": "Width (cm)",
+    "height": "Height (cm)",
+    "technique": "Technique",
+    "material": "Material",
+    "placeholderAuthor": "Enter author name",
+    "placeholderTitle": "Enter artwork title",
+    "placeholderYear": "0",
+    "placeholderTechnique": "Specify technique",
+    "placeholderMaterial": "Specify material",
+    "selectTechnique": "Select technique",
+    "selectMaterial": "Select material",
+    "generateTitles": "Generate titles",
+    "chooseTitle": "Choose one of the suggested titles:",
+    "generatingTitles": "Generating titles...",
+    "required": "*",
+    "errorTitleRequired": "Title is required",
+    "errorWidthRequired": "Width is required",
+    "errorWidthInvalid": "Enter a valid number",
+    "errorHeightRequired": "Height is required",
+    "errorHeightInvalid": "Enter a valid number",
+    "errorTechniqueRequired": "Technique is required",
+    "errorYearInvalid": "Enter a valid year (4 digits)",
+    "errorUploadFirst": "Upload an image first",
+    "errorTitlesFailed": "Failed to generate titles. Please try again.",
+    "errorTitlesApi": "Error generating titles. Check API settings."
+  },
+  "techniques": {
+    "oil": "Oil",
+    "watercolor": "Watercolor",
+    "acrylic": "Acrylic",
+    "gouache": "Gouache",
+    "tempera": "Tempera",
+    "pastel": "Pastel",
+    "charcoal": "Charcoal",
+    "pencil": "Pencil",
+    "digital": "Digital image",
+    "mixed": "Mixed media",
+    "other": "Other"
+  },
+  "materials": {
+    "canvas": "Canvas",
+    "paper": "Paper",
+    "cardboard": "Cardboard",
+    "wood": "Wood",
+    "metal": "Metal",
+    "glass": "Glass",
+    "fabric": "Fabric",
+    "plastic": "Plastic",
+    "other": "Other"
+  },
+  "upload": {
+    "dragOrClick": "Drag an image here or click to select",
+    "formats": "Supported formats: JPG, PNG (max. 10MB)",
+    "loading": "Loading image...",
+    "previewAlt": "Preview",
+    "removeImage": "Remove image",
+    "errorNoFile": "No file selected",
+    "errorFormat": "Unsupported format. Use JPG or PNG",
+    "errorSize": "File too large. Maximum size: 10MB",
+    "errorProcess": "Error processing image",
+    "errorRead": "Error reading file",
+    "errorAbort": "File reading was aborted"
+  },
+  "description": {
+    "title": "Description",
+    "poeticTitle": "Atmospheric description",
+    "generating": "Generating description..."
+  },
+  "card": {
+    "defaultTitle": "Artwork card"
+  },
+  "errors": {
+    "descriptionRequired": "Fill in required fields: title, size, technique",
+    "descriptionFailed": "Failed to generate description"
+  }
+}

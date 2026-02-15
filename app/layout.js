@@ -1,4 +1,5 @@
 import './globals.css'
+import I18nProvider from './components/I18nProvider'
 
 export const metadata = {
   title: 'Генератор карточек для каталогов',
@@ -7,8 +8,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru">
-      <body>{children}</body>
+    <html lang="ru" suppressHydrationWarning>
+      <body>
+        <I18nProvider>{children}</I18nProvider>
+      </body>
     </html>
   )
 }

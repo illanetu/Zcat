@@ -1,10 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from './CopyButton.module.css'
 
-export default function CopyButton({ text, label = 'Копировать текст' }) {
+export default function CopyButton({ text, label }) {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
+  const displayLabel = label ?? t('button.copy')
 
   const handleCopy = async () => {
     if (!text || text.trim().length === 0) return
@@ -25,14 +28,14 @@ export default function CopyButton({ text, label = 'Копировать тек�
       onClick={handleCopy}
       disabled={isDisabled}
       className={`${styles.button} ${copied ? styles.copied : ''}`}
-      aria-label={copied ? 'Скопировано' : label}
-      title={label}
+      aria-label={copied ? t('button.copied') : displayLabel}
+      title={displayLabel}
     >
       <span className={styles.icon} aria-hidden="true">
         {copied ? '✓' : '⎘'}
       </span>
       <span className={styles.label}>
-        {copied ? 'Скопировано' : label}
+        {copied ? t('button.copied') : displayLabel}
       </span>
     </button>
   )

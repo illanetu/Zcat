@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import ImageUpload from './components/ImageUpload'
 import ArtworkForm from './components/ArtworkForm'
 import ParameterCard from './components/ParameterCard'
@@ -10,9 +11,11 @@ import CopyButton from './components/CopyButton'
 import ShareButton from './components/ShareButton'
 import { buildParameterCard } from '../lib/card-utils'
 import { generateDescription } from '../lib/ai-client'
+import { TECHNIQUE_KEYS, MATERIAL_KEYS } from '../lib/form-options'
 import styles from './page.module.css'
 
 export default function Home() {
+  const { t } = useTranslation()
   const [imageData, setImageData] = useState(null)
   const [formData, setFormData] = useState({
     title: '',
@@ -39,11 +42,11 @@ export default function Home() {
 
   const handleGenerateDescription = async () => {
     if (!imageData?.base64) {
-      setDescriptionError('Сначала загрузите изображение')
+      setDescriptionError(t('form.errorUploadFirst'))
       return
     }
     if (!formData.title || !formData.width || !formData.height || !formData.technique) {
-      setDescriptionError('Заполните обязательные поля: название, размер, техника')
+      setDescriptionError(t('errors.descriptionRequired'))
       return
     }
     setDescriptionError(null)
@@ -51,35 +54,53 @@ export default function Home() {
     setDescription('')
     setDescriptionPoetic('')
     try {
-      const { description: d, descriptionPoetic: dp } = await generateDescription(imageData.base64, formData)
+      const dataForApi = {
+        ...formData,
+        technique: TECHNIQUE_KEYS.includes(formData.technique) ? t(`techniques.${formData.technique}`) : formData.technique,
+        material: MATERIAL_KEYS.includes(formData.material) ? t(`materials.${formData.material}`) : formData.material
+      }
+      const { description: d, descriptionPoetic: dp } = await generateDescription(imageData.base64, dataForApi)
       setDescription(d)
       setDescriptionPoetic(dp)
     } catch (err) {
-      setDescriptionError(err.message || 'Не удалось сгенерировать описание')
+      setDescriptionError(err.message || t('errors.descriptionFailed'))
     } finally {
       setIsGeneratingDescription(false)
     }
   }
 
-  // Формируем данные для этикетки параметров
+  const formDataForCard = useMemo(() => {
+    const techniqueDisplay = TECHNIQUE_KEYS.includes(formData.technique)
+      ? t(`techniques.${formData.technique}`)
+      : formData.technique
+    const materialDisplay = MATERIAL_KEYS.includes(formData.material)
+      ? t(`materials.${formData.material}`)
+      : formData.material
+    return {
+      ...formData,
+      technique: techniqueDisplay,
+      material: materialDisplay
+    }
+  }, [formData, t])
+
   const parameterCardData = useMemo(() => {
-    return buildParameterCard(formData)
-  }, [formData])
+    return buildParameterCard(formDataForCard)
+  }, [formDataForCard])
 
   return (
     <div className={styles.app}>
       <header className={styles.appHeader}>
-        <h1 className={styles.appTitle}>Генератор описания для каталогов и выставок</h1>
+        <h1 className={styles.appTitle}>{t('app.title')}</h1>
         <SettingsButton />
       </header>
       <main className={styles.appMain}>
         <div className={styles.row1}>
           <section className={styles.uploadSection}>
-            <h2 className={styles.sectionTitle}>Загрузка изображения</h2>
+            <h2 className={styles.sectionTitle}>{t('section.uploadImage')}</h2>
             <ImageUpload onImageSelect={handleImageSelect} />
           </section>
           <section className={styles.formSection}>
-            <h2 className={styles.sectionTitle}>Данные произведения</h2>
+            <h2 className={styles.sectionTitle}>{t('section.artworkData')}</h2>
             <ArtworkForm
               imageData={imageData}
               onFormDataChange={handleFormDataChange}
@@ -93,13 +114,13 @@ export default function Home() {
                   className={styles.generateDescriptionButton}
                   disabled={!imageData?.base64 || isGeneratingDescription}
                 >
-                  {isGeneratingDescription ? 'Генерация...' : 'Сгенерировать описание'}
+                  {isGeneratingDescription ? t('button.generating') : t('button.generateDescription')}
                 </button>
               </div>
             )}
           </section>
           <section className={styles.parameterSection}>
-            <h2 className={styles.sectionTitle}>Этикетка</h2>
+            <h2 className={styles.sectionTitle}>{t('section.label')}</h2>
             <div className={styles.parameterCardWrap}>
               {parameterCardData && (
                 <ParameterCard
@@ -119,10 +140,10 @@ export default function Home() {
             <div className={styles.actionsBar}>
               <CopyButton
                 text={[description, descriptionPoetic].filter(Boolean).join('\n\n')}
-                label="Копировать текст"
+                label={t('button.copy')}
               />
               <ShareButton
-                title={formData.title || 'Карточка произведения'}
+                title={formData.title || t('card.defaultTitle')}
                 text={[description, descriptionPoetic].filter(Boolean).join('\n\n')}
               />
             </div>

@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from './ImageUpload.module.css'
 
 export default function ImageUpload({ onImageSelect, children }) {
+  const { t } = useTranslation()
   const [image, setImage] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
   const [imageBase64, setImageBase64] = useState(null)
@@ -12,28 +14,20 @@ export default function ImageUpload({ onImageSelect, children }) {
   const [error, setError] = useState(null)
   const fileInputRef = useRef(null)
 
-  // Разрешенные форматы
   const allowedFormats = ['image/jpeg', 'image/jpg', 'image/png']
   const maxFileSize = 10 * 1024 * 1024 // 10MB
 
-  // Валидация файла
   const validateFile = (file) => {
     if (!file) {
-      return { valid: false, error: 'Файл не выбран' }
+      return { valid: false, error: t('upload.errorNoFile') }
     }
 
     if (!allowedFormats.includes(file.type)) {
-      return { 
-        valid: false, 
-        error: 'Неподдерживаемый формат. Используйте JPG или PNG' 
-      }
+      return { valid: false, error: t('upload.errorFormat') }
     }
 
     if (file.size > maxFileSize) {
-      return { 
-        valid: false, 
-        error: 'Файл слишком большой. Максимальный размер: 10MB' 
-      }
+      return { valid: false, error: t('upload.errorSize') }
     }
 
     return { valid: true, error: null }
@@ -73,22 +67,22 @@ export default function ImageUpload({ onImageSelect, children }) {
           })
         }
       } else {
-        setError('Ошибка при обработке изображения')
+        setError(t('upload.errorProcess'))
       }
     }
 
     reader.onerror = () => {
       setIsLoading(false)
-      setError('Ошибка при чтении файла')
+      setError(t('upload.errorRead'))
     }
 
     reader.onabort = () => {
       setIsLoading(false)
-      setError('Чтение файла было прервано')
+      setError(t('upload.errorAbort'))
     }
 
     reader.readAsDataURL(file)
-  }, [onImageSelect])
+  }, [onImageSelect, t])
 
   // Обработка выбора файла через input
   const handleFileSelect = (e) => {
@@ -176,10 +170,10 @@ export default function ImageUpload({ onImageSelect, children }) {
               <line x1="12" y1="3" x2="12" y2="15" />
             </svg>
             <p className={styles.uploadText}>
-              Перетащите изображение сюда или нажмите для выбора
+              {t('upload.dragOrClick')}
             </p>
             <p className={styles.uploadHint}>
-              Поддерживаются форматы: JPG, PNG (макс. 10MB)
+              {t('upload.formats')}
             </p>
           </div>
         </div>
@@ -193,13 +187,13 @@ export default function ImageUpload({ onImageSelect, children }) {
           <div className={styles.previewWrapper}>
             <img
               src={imagePreview}
-              alt="Превью"
+              alt={t('upload.previewAlt')}
               className={styles.previewImage}
             />
             <button
               className={styles.removeButton}
               onClick={handleRemove}
-              aria-label="Удалить изображение"
+              aria-label={t('upload.removeImage')}
             >
               <svg
                 width="20"
@@ -220,7 +214,7 @@ export default function ImageUpload({ onImageSelect, children }) {
               className={styles.changeButton}
               onClick={handleClick}
             >
-              Выбрать другое изображение
+              {t('button.chooseOtherImage')}
             </button>
             {children}
           </div>
