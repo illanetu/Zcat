@@ -5,6 +5,9 @@ import ImageUpload from './components/ImageUpload'
 import ArtworkForm from './components/ArtworkForm'
 import ParameterCard from './components/ParameterCard'
 import DescriptionCard from './components/DescriptionCard'
+import SettingsButton from './components/SettingsButton'
+import CopyButton from './components/CopyButton'
+import ShareButton from './components/ShareButton'
 import { buildParameterCard } from '../lib/card-utils'
 import { generateDescription } from '../lib/ai-client'
 import styles from './page.module.css'
@@ -66,7 +69,8 @@ export default function Home() {
   return (
     <div className={styles.app}>
       <header className={styles.appHeader}>
-        <h1>Генератор описания для каталогов и выставок</h1>
+        <h1 className={styles.appTitle}>Генератор описания для каталогов и выставок</h1>
+        <SettingsButton />
       </header>
       <main className={styles.appMain}>
         <div className={styles.row1}>
@@ -111,6 +115,18 @@ export default function Home() {
         </div>
 
         <div className={styles.row2}>
+          {(description || descriptionPoetic) && (
+            <div className={styles.actionsBar}>
+              <CopyButton
+                text={[description, descriptionPoetic].filter(Boolean).join('\n\n')}
+                label="Копировать текст"
+              />
+              <ShareButton
+                title={formData.title || 'Карточка произведения'}
+                text={[description, descriptionPoetic].filter(Boolean).join('\n\n')}
+              />
+            </div>
+          )}
           <div className={styles.descriptionsRow}>
             <DescriptionCard
               description={description}

@@ -5,18 +5,28 @@
 }
 
 .appHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-border);
   padding: var(--spacing-md) var(--spacing-lg);
   box-shadow: var(--shadow-sm);
 }
 
-.appHeader h1 {
+.appTitle {
   font-size: 1.75rem;
   text-align: center;
   color: var(--color-primary);
   font-weight: 300;
   letter-spacing: 0.05em;
+  flex: 1;
+  min-width: 0;
+}
+
+.appHeader .appTitle {
+  margin: 0;
 }
 
 .appMain {
@@ -78,6 +88,13 @@
   gap: 0.15rem;
 }
 
+.actionsBar {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
 .generateDescriptionButton {
   align-self: center;
   padding: 0.5rem 1rem;
@@ -135,7 +152,7 @@
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
-  .appHeader h1 {
+  .appTitle {
     font-size: 1.5rem;
   }
 
@@ -146,7 +163,7 @@
 }
 
 @media (max-width: 480px) {
-  .appHeader h1 {
+  .appTitle {
     font-size: 1.25rem;
   }
 
