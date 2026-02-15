@@ -8,6 +8,12 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  animation: fadeIn 0.4s var(--ease-out-expo);
+  transition: box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .cardContent {
@@ -82,10 +88,11 @@
 }
 
 .errorMessage {
-  color: #b71c1c;
+  color: var(--color-error);
   font-size: 0.95rem;
   margin: 0;
   line-height: 1.5;
+  animation: fadeIn 0.3s ease-out;
 }
 
 /* Адаптивность */

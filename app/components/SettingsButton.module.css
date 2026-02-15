@@ -14,7 +14,7 @@
   font-size: 0.9rem;
   font-family: var(--font-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
   box-shadow: var(--shadow-sm);
 }
 
@@ -49,6 +49,7 @@
   box-shadow: var(--shadow-lg);
   z-index: 100;
   overflow: hidden;
+  animation: slideDown 0.25s var(--ease-out-expo);
 }
 
 .panelHeader {

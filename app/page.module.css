@@ -13,6 +13,7 @@
   border-bottom: 1px solid var(--color-border);
   padding: var(--spacing-md) var(--spacing-lg);
   box-shadow: var(--shadow-sm);
+  transition: padding var(--transition-normal);
 }
 
 .appTitle {
@@ -79,6 +80,42 @@
   margin-bottom: var(--spacing-sm);
   color: var(--color-primary);
   font-weight: 500;
+  letter-spacing: 0.02em;
+  position: relative;
+  padding-bottom: var(--spacing-xs);
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-accent) 0%, transparent 100%);
+  opacity: 0.6;
+}
+
+.uploadSection,
+.formSection,
+.parameterSection {
+  animation: fadeIn 0.4s var(--ease-out-expo) backwards;
+}
+
+.uploadSection {
+  animation-delay: 0.05s;
+}
+
+.formSection {
+  animation-delay: 0.1s;
+}
+
+.parameterSection {
+  animation-delay: 0.15s;
+}
+
+.row2 {
+  animation: fadeIn 0.4s var(--ease-out-expo) 0.2s backwards;
 }
 
 /* 2-я строка: кнопка и два описания (максимально близко к 1-й строке) */
@@ -105,11 +142,11 @@
   font-size: 0.95rem;
   font-family: var(--font-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
 }
 
 .generateDescriptionButton:hover:not(:disabled) {
-  background-color: #7a6349;
+  background-color: var(--color-accent-hover);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
@@ -134,12 +171,22 @@
 @media (max-width: 900px) {
   .row1 {
     grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .uploadSection,
+  .formSection,
+  .parameterSection {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .parameterCardWrap {
     width: 100%;
     max-width: 300px;
     min-height: 200px;
+    margin: 0 auto;
   }
 
   .descriptionsRow {
@@ -160,6 +207,10 @@
     padding: var(--spacing-md);
     gap: 0.15rem;
   }
+
+  .sectionTitle::after {
+    width: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -169,5 +220,27 @@
 
   .appMain {
     padding: var(--spacing-sm);
+  }
+
+  .actionsBar {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .sectionTitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .appHeader {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .appTitle {
+    font-size: 1.1rem;
+  }
+
+  .appMain {
+    padding: var(--spacing-xs);
   }
 }

@@ -10,6 +10,12 @@
   min-height: 250px;
   display: flex;
   flex-direction: column;
+  animation: fadeIn 0.4s var(--ease-out-expo);
+  transition: box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .cardContent {
