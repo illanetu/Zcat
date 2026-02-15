@@ -117,13 +117,19 @@
   cursor: not-allowed;
 }
 
-/* Генератор названий */
+/* Генератор названий: в группе с названием и годом, на десктопе — под ними по полной ширине */
 .titleGenerator {
   margin-top: var(--spacing-sm);
   padding: var(--spacing-sm);
   background-color: var(--color-secondary);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
+  flex: 1 1 100%;
+  order: 2;
+}
+
+.titleYearGroup .formGroup:last-child {
+  order: 1;
 }
 
 .titleGeneratorLabel {
@@ -226,6 +232,7 @@
 /* Группа названия и года */
 .titleYearGroup {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-sm);
   align-items: flex-start;
 }
@@ -277,6 +284,11 @@
   .titleYearGroup {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* В мобильной версии список названий сразу под кнопкой, без лишнего отступа */
+  .titleYearGroup .titleGenerator {
+    margin-top: var(--spacing-xs);
   }
 
   .titleList {

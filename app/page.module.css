@@ -49,6 +49,18 @@
   align-items: start;
 }
 
+/* Десктоп: строка с кнопкой «Сгенерировать описание» максимально близко к первой строке */
+@media (min-width: 901px) {
+  .row1 {
+    row-gap: var(--spacing-xs);
+    column-gap: var(--spacing-md);
+  }
+
+  .generateDescriptionWrap {
+    margin-top: 0;
+  }
+}
+
 .uploadSection {
   min-width: 0;
 }

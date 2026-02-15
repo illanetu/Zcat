@@ -285,6 +285,38 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
           )}
         </div>
 
+        {showTitleGenerator && (
+          <div className={styles.titleGenerator}>
+            <p className={styles.titleGeneratorLabel}>{t('form.chooseTitle')}</p>
+            {isGeneratingTitles ? (
+              <div className={styles.loadingTitles}>
+                <div className={styles.spinner}></div>
+                <span>{t('form.generatingTitles')}</span>
+              </div>
+            ) : (
+              <div className={styles.titleList}>
+                {generatedTitles.map((generatedTitle, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => handleSelectTitle(generatedTitle)}
+                    className={styles.titleOption}
+                  >
+                    {generatedTitle}
+                  </button>
+                ))}
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => setShowTitleGenerator(false)}
+              className={styles.closeGeneratorButton}
+            >
+              {t('button.cancel')}
+            </button>
+          </div>
+        )}
+
         <div className={styles.formGroup}>
           <label htmlFor="year" className={styles.label}>
             Год
@@ -304,38 +336,6 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
           )}
         </div>
       </div>
-
-      {showTitleGenerator && (
-        <div className={styles.titleGenerator}>
-          <p className={styles.titleGeneratorLabel}>{t('form.chooseTitle')}</p>
-          {isGeneratingTitles ? (
-            <div className={styles.loadingTitles}>
-              <div className={styles.spinner}></div>
-              <span>{t('form.generatingTitles')}</span>
-            </div>
-          ) : (
-            <div className={styles.titleList}>
-              {generatedTitles.map((generatedTitle, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => handleSelectTitle(generatedTitle)}
-                  className={styles.titleOption}
-                >
-                  {generatedTitle}
-                </button>
-              ))}
-            </div>
-          )}
-          <button
-            type="button"
-            onClick={() => setShowTitleGenerator(false)}
-            className={styles.closeGeneratorButton}
-          >
-            {t('button.cancel')}
-          </button>
-        </div>
-      )}
 
       <div className={styles.sizeTechniqueMaterialGroup}>
         <div className={styles.formGroup}>
