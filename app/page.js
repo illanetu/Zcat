@@ -39,8 +39,8 @@ export default function Home() {
       setDescriptionError('Сначала загрузите изображение')
       return
     }
-    if (!formData.title || !formData.width || !formData.height || !formData.technique || !formData.material) {
-      setDescriptionError('Заполните обязательные поля: название, размер, техника, материал')
+    if (!formData.title || !formData.width || !formData.height || !formData.technique) {
+      setDescriptionError('Заполните обязательные поля: название, размер, техника')
       return
     }
     setDescriptionError(null)

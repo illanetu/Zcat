@@ -65,7 +65,7 @@ export async function POST(request) {
       body: JSON.stringify({
         // Используем модель в зависимости от провайдера
         model: process.env.OPENROUTER_API_KEY 
-          ? (process.env.OPENROUTER_MODEL || 'openai/gpt-4o')
+          ? (process.env.OPENROUTER_MODEL || 'qwen/qwen3-vl-30b-a3b-thinking') // 'openai/gpt-4o' - платная
           : 'gpt-4o',
         messages: [
           {

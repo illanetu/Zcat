@@ -83,7 +83,7 @@ export async function POST(request) {
       headers,
       body: JSON.stringify({
         model: process.env.OPENROUTER_API_KEY
-          ? (process.env.OPENROUTER_MODEL || 'openai/gpt-4o')
+          ? (process.env.OPENROUTER_MODEL || 'qwen/qwen3-vl-30b-a3b-thinking') // 'openai/gpt-4o' - платная
           : 'gpt-4o',
         messages: [
           {
@@ -113,7 +113,7 @@ export async function POST(request) {
             ]
           }
         ],
-        max_tokens: 240,
+        max_tokens: 300,
         temperature: 0.6,
       }),
     })
