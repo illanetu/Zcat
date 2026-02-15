@@ -82,6 +82,13 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
           delete newErrors.technique
         }
         break
+      case 'material':
+        if (!value.trim()) {
+          newErrors.material = 'Материал обязателен для заполнения'
+        } else {
+          delete newErrors.material
+        }
+        break
       case 'author':
         // Автор не обязателен
         delete newErrors.author
@@ -156,13 +163,16 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
     const value = e.target.value
     setMaterial(value)
     setCustomMaterial('')
-    updateFormData({ material: value === 'Другое' ? '' : value })
+    const finalMaterial = value === 'Другое' ? '' : value
+    validateField('material', finalMaterial)
+    updateFormData({ material: finalMaterial })
   }
 
   const handleCustomMaterialChange = (e) => {
     const value = e.target.value
     setCustomMaterial(value)
     const finalMaterial = value.trim() || ''
+    validateField('material', finalMaterial)
     updateFormData({ material: finalMaterial })
   }
 
@@ -195,8 +205,10 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
     const heightValid = validateField('height', height)
     const techniqueValue = technique === 'Другое' ? customTechnique : technique
     const techniqueValid = validateField('technique', techniqueValue)
+    const materialValue = material === 'Другое' ? customMaterial : material
+    const materialValid = validateField('material', materialValue)
     
-    return titleValid && widthValid && heightValid && techniqueValid
+    return titleValid && widthValid && heightValid && techniqueValid && materialValid
   }
 
   // Генерация названий с помощью AI
@@ -430,13 +442,14 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
 
         <div className={styles.formGroup}>
           <label htmlFor="material" className={styles.label}>
-            Материал
+            Материал <span className={styles.required}>*</span>
           </label>
           <select
             id="material"
             value={material}
             onChange={handleMaterialChange}
-            className={styles.select}
+            onBlur={() => validateField('material', material === 'Другое' ? customMaterial : material)}
+            className={`${styles.select} ${errors.material ? styles.inputError : ''}`}
           >
             <option value="">Выберите материал</option>
             {MATERIALS.map((mat) => (
@@ -450,9 +463,13 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
               type="text"
               value={customMaterial}
               onChange={handleCustomMaterialChange}
-              className={`${styles.input} ${styles.customInput}`}
+              onBlur={() => validateField('material', customMaterial)}
+              className={`${styles.input} ${styles.customInput} ${errors.material ? styles.inputError : ''}`}
               placeholder="Укажите материал"
             />
+          )}
+          {errors.material && (
+            <span className={styles.fieldError}>{errors.material}</span>
           )}
         </div>
       </div>

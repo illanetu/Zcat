@@ -33,7 +33,7 @@
 /* 1-я строка: выравнивание по верхнему краю формы, кнопка под формой по центру */
 .row1 {
   display: grid;
-  grid-template-columns: 300px 1fr 300px;
+  grid-template-columns: 300px 1fr 390px;
   gap: var(--spacing-md);
   align-items: start;
 }
@@ -56,9 +56,9 @@
   min-width: 0;
 }
 
-/* Размер блока этикетки как у превью изображения (300×250) */
+/* Блок этикетки — ширина секции 390px (+30% от 300) */
 .parameterCardWrap {
-  width: 300px;
+  width: 100%;
   min-height: 250px;
   display: flex;
   align-items: stretch;
