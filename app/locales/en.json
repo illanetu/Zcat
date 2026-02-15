@@ -59,6 +59,7 @@
     "errorHeightRequired": "Height is required",
     "errorHeightInvalid": "Enter a valid number",
     "errorTechniqueRequired": "Technique is required",
+    "errorMaterialRequired": "Material is required",
     "errorYearInvalid": "Enter a valid year (4 digits)",
     "errorUploadFirst": "Upload an image first",
     "errorTitlesFailed": "Failed to generate titles. Please try again.",
@@ -110,7 +111,7 @@
     "defaultTitle": "Artwork card"
   },
   "errors": {
-    "descriptionRequired": "Fill in required fields: title, size, technique",
+    "descriptionRequired": "Fill in required fields: title, size, technique, material",
     "descriptionFailed": "Failed to generate description"
   }
 }

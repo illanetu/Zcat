@@ -45,7 +45,7 @@ export default function Home() {
       setDescriptionError(t('form.errorUploadFirst'))
       return
     }
-    if (!formData.title || !formData.width || !formData.height || !formData.technique) {
+    if (!formData.title || !formData.width || !formData.height || !formData.technique || !formData.material) {
       setDescriptionError(t('errors.descriptionRequired'))
       return
     }

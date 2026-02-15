@@ -58,6 +58,13 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
           delete newErrors.technique
         }
         break
+      case 'material':
+        if (!value.trim()) {
+          newErrors.material = t('form.errorMaterialRequired')
+        } else {
+          delete newErrors.material
+        }
+        break
       case 'author':
         delete newErrors.author
         break
@@ -130,13 +137,16 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
     const value = e.target.value
     setMaterial(value)
     setCustomMaterial('')
-    updateFormData({ material: value === 'other' ? '' : value })
+    const finalMaterial = value === 'other' ? '' : value
+    validateField('material', finalMaterial)
+    updateFormData({ material: finalMaterial })
   }
 
   const handleCustomMaterialChange = (e) => {
     const value = e.target.value
     setCustomMaterial(value)
     const finalMaterial = value.trim() || ''
+    validateField('material', finalMaterial)
     updateFormData({ material: finalMaterial })
   }
 
@@ -169,8 +179,10 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
     const heightValid = validateField('height', height)
     const techniqueValue = technique === 'other' ? customTechnique : technique
     const techniqueValid = validateField('technique', techniqueValue)
+    const materialValue = material === 'other' ? customMaterial : material
+    const materialValid = validateField('material', materialValue)
 
-    return titleValid && widthValid && heightValid && techniqueValid
+    return titleValid && widthValid && heightValid && techniqueValid && materialValid
   }
 
   const handleGenerateTitles = async () => {
@@ -403,13 +415,13 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
 
         <div className={styles.formGroup}>
           <label htmlFor="material" className={styles.label}>
-            {t('form.material')}
+            {t('form.material')} <span className={styles.required}>{t('form.required')}</span>
           </label>
           <select
             id="material"
             value={material}
             onChange={handleMaterialChange}
-            className={styles.select}
+            className={`${styles.select} ${errors.material ? styles.inputError : ''}`}
           >
             <option value="">{t('form.selectMaterial')}</option>
             {MATERIAL_KEYS.map((key) => (
@@ -423,9 +435,12 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
               type="text"
               value={customMaterial}
               onChange={handleCustomMaterialChange}
-              className={`${styles.input} ${styles.customInput}`}
+              className={`${styles.input} ${styles.customInput} ${errors.material ? styles.inputError : ''}`}
               placeholder={t('form.placeholderMaterial')}
             />
+          )}
+          {errors.material && (
+            <span className={styles.fieldError}>{errors.material}</span>
           )}
         </div>
       </div>
