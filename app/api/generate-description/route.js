@@ -19,9 +19,20 @@ function parseSection(text, startMarker, endMarker) {
  * POST /api/generate-description
  * Возвращает: { description, descriptionPoetic }
  */
+const LOCALE_MARKERS = {
+  ru: { desc: 'ОПИСАНИЕ:', poetic: 'АТМОСФЕРНОЕ ОПИСАНИЕ:' },
+  en: { desc: 'DESCRIPTION:', poetic: 'ATMOSPHERIC DESCRIPTION:' }
+}
+
+function getMarkers(locale) {
+  return LOCALE_MARKERS[locale] || LOCALE_MARKERS.ru
+}
+
 export async function POST(request) {
   try {
-    const { image, artworkData } = await request.json()
+    const { image, artworkData, locale = 'ru' } = await request.json()
+    const lang = locale === 'en' ? 'английском' : 'русском'
+    const markers = getMarkers(locale)
 
     if (!image) {
       return NextResponse.json(
@@ -88,13 +99,15 @@ export async function POST(request) {
         messages: [
           {
             role: 'system',
-            content: `Эксперт по искусству. Два описания в формате:
+            content: `Эксперт по искусству. Два описания в формате (заголовки секций пиши точно так):
 
-ОПИСАНИЕ:
+${markers.desc}
 [2–5 предложений для каталога: композиция, цвет, настроение.]
 
-АТМОСФЕРНОЕ ОПИСАНИЕ:
-[Поэтичное описание, метафоры, образный язык.]`
+${markers.poetic}
+[Поэтичное описание, метафоры, образный язык.]
+
+Весь текст (кроме заголовков секций) пиши на ${lang} языке.`
           },
           {
             role: 'user',
@@ -138,8 +151,8 @@ export async function POST(request) {
       )
     }
 
-    const description = parseSection(raw, 'ОПИСАНИЕ:', 'АТМОСФЕРНОЕ ОПИСАНИЕ:')
-    const descriptionPoetic = parseSection(raw, 'АТМОСФЕРНОЕ ОПИСАНИЕ:', null)
+    const description = parseSection(raw, markers.desc, markers.poetic)
+    const descriptionPoetic = parseSection(raw, markers.poetic, null)
 
     return NextResponse.json({
       description: description || raw,

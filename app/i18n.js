@@ -1,6 +1,6 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import { getStoredLanguage, setStoredLanguage } from '../lib/storage'
+import { setStoredLanguage } from '../lib/storage'
 import ru from './locales/ru.json'
 import en from './locales/en.json'
 
@@ -9,17 +9,13 @@ const resources = {
   en: { translation: en }
 }
 
-function getInitialLanguage() {
-  if (typeof window === 'undefined') return 'ru'
-  const stored = getStoredLanguage()
-  return stored === 'en' || stored === 'ru' ? stored : 'ru'
-}
-
+// Всегда стартуем с 'ru', чтобы сервер и первый клиентский рендер совпадали (гидрация).
+// Сохранённый язык подставляется в I18nProvider после mount (useEffect).
 i18n.use(initReactI18next).init({
   resources,
   fallbackLng: 'ru',
   supportedLngs: ['ru', 'en'],
-  lng: typeof window !== 'undefined' ? getInitialLanguage() : 'ru',
+  lng: 'ru',
   interpolation: {
     escapeValue: false
   }

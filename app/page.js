@@ -15,7 +15,7 @@ import { TECHNIQUE_KEYS, MATERIAL_KEYS } from '../lib/form-options'
 import styles from './page.module.css'
 
 export default function Home() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [imageData, setImageData] = useState(null)
   const [formData, setFormData] = useState({
     title: '',
@@ -59,7 +59,7 @@ export default function Home() {
         technique: TECHNIQUE_KEYS.includes(formData.technique) ? t(`techniques.${formData.technique}`) : formData.technique,
         material: MATERIAL_KEYS.includes(formData.material) ? t(`materials.${formData.material}`) : formData.material
       }
-      const { description: d, descriptionPoetic: dp } = await generateDescription(imageData.base64, dataForApi)
+      const { description: d, descriptionPoetic: dp } = await generateDescription(imageData.base64, dataForApi, i18n.language)
       setDescription(d)
       setDescriptionPoetic(dp)
     } catch (err) {
