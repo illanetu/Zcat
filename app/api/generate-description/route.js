@@ -1,38 +1,34 @@
 import { NextResponse } from 'next/server'
+import { getDescriptionStyle, getPromptForStyle } from '../../../lib/description-styles'
 
 /**
- * Извлекает текст между двумя маркерами (или до конца строки, если endMarker === null)
+ * Извлекает текст после маркера до конца (один блок описания).
  */
-function parseSection(text, startMarker, endMarker) {
+function parseSection(text, startMarker) {
   const startIdx = text.indexOf(startMarker)
-  if (startIdx === -1) return ''
+  if (startIdx === -1) return text.trim()
   const contentStart = startIdx + startMarker.length
-  const slice = text.slice(contentStart).trimStart()
-  if (!endMarker) return slice.trim()
-  const endIdx = slice.indexOf(endMarker)
-  if (endIdx === -1) return slice.trim()
-  return slice.slice(0, endIdx).trim()
+  return text.slice(contentStart).trim()
 }
 
 /**
  * API Route для генерации описания произведения искусства с помощью AI
  * POST /api/generate-description
- * Возвращает: { description, descriptionPoetic }
+ * Body: { image, artworkData, locale, descriptionStyle }
+ * Возвращает: { description, descriptionStyleId }
  */
-const LOCALE_MARKERS = {
-  ru: { desc: 'ОПИСАНИЕ:', poetic: 'АТМОСФЕРНОЕ ОПИСАНИЕ:' },
-  en: { desc: 'DESCRIPTION:', poetic: 'ATMOSPHERIC DESCRIPTION:' }
-}
-
-function getMarkers(locale) {
-  return LOCALE_MARKERS[locale] || LOCALE_MARKERS.ru
+const SECTION_MARKERS = {
+  ru: 'ОПИСАНИЕ:',
+  en: 'DESCRIPTION:'
 }
 
 export async function POST(request) {
   try {
-    const { image, artworkData, locale = 'ru' } = await request.json()
+    const { image, artworkData, locale = 'ru', descriptionStyle: styleId } = await request.json()
     const lang = locale === 'en' ? 'английском' : 'русском'
-    const markers = getMarkers(locale)
+    const style = getDescriptionStyle(styleId)
+    const stylePrompt = getPromptForStyle(style.id, locale)
+    const sectionMarker = SECTION_MARKERS[locale] || SECTION_MARKERS.ru
 
     if (!image) {
       return NextResponse.json(
@@ -99,24 +95,19 @@ export async function POST(request) {
         messages: [
           {
             role: 'system',
-            content: `Эксперт по искусству. Два описания в формате (заголовки секций пиши точно так):
+            content: `Эксперт по искусству. Одно описание в формате (заголовок секции пиши точно так):
 
-${markers.desc}
-[Первый вариант: лаконичное описание для каталога галереи, 2–5 предложений. Стиль нейтральный, профессиональный. Композиция, цвет, настроение.]
-[2–5 предложений для каталога: композиция, цвет, настроение.]
+${sectionMarker}
+[${stylePrompt}]
 
-${markers.poetic}
-[Второй вариант: атмосферное, поэтичное, литературное описание. Тот же объём. Образный язык, метафоры, настроение — как в тексте для альбома или эссе об искусстве.]
-[Поэтичное описание, метафоры, образный язык.]
-
-Весь текст (кроме заголовков секций) пиши на ${lang} языке.`
+Весь текст описания пиши на ${lang} языке.`
           },
           {
             role: 'user',
             content: [
               {
                 type: 'text',
-                text: contextText ? `${contextText}Опиши произведение в указанном формате.` : 'Опиши произведение в указанном формате.'
+                text: contextText ? `${contextText}Опиши произведение в указанном стиле.` : 'Опиши произведение в указанном стиле.'
               },
               {
                 type: 'image_url',
@@ -153,12 +144,11 @@ ${markers.poetic}
       )
     }
 
-    const description = parseSection(raw, markers.desc, markers.poetic)
-    const descriptionPoetic = parseSection(raw, markers.poetic, null)
+    const description = parseSection(raw, sectionMarker) || raw
 
     return NextResponse.json({
-      description: description || raw,
-      descriptionPoetic: descriptionPoetic || ''
+      description: description.trim(),
+      descriptionStyleId: style.id
     })
   } catch (error) {
     console.error('Ошибка при генерации описания:', error)

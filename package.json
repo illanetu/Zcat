@@ -1,7 +1,7 @@
 {
   "name": "zcat",
   "version": "0.1.0",
-  "description": "Генератор карточек для каталогов и выставок",
+  "description": "Генератор описания для каталогов и выставок",
   "private": true,
   "scripts": {
     "dev": "next dev",

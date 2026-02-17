@@ -1,16 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { DESCRIPTION_STYLES, getStoredStyleId, setStoredStyleId } from '../../lib/description-styles'
 import styles from './SettingsButton.module.css'
 
 export default function SettingsButton() {
   const { t, i18n } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
+  const [descriptionStyleId, setDescriptionStyleId] = useState(getStoredStyleId)
+
+  useEffect(() => {
+    setDescriptionStyleId(getStoredStyleId())
+  }, [isOpen])
 
   const handleLanguageChange = (e) => {
     const value = e.target.value
     i18n.changeLanguage(value)
+  }
+
+  const handleDescriptionStyleChange = (e) => {
+    const value = e.target.value
+    setStoredStyleId(value)
+    setDescriptionStyleId(value)
   }
 
   const togglePanel = () => {
@@ -65,12 +77,18 @@ export default function SettingsButton() {
             </div>
             <div className={styles.settingGroup}>
               <label className={styles.settingLabel}>{t('settings.descriptionStyle')}</label>
-              <select className={styles.settingSelect} disabled aria-label={t('settings.descriptionStyle')}>
-                <option value="neutral">{t('settings.styleNeutral')}</option>
-                <option value="poetic">{t('settings.stylePoetic')}</option>
-                <option value="catalog">{t('settings.styleCatalog')}</option>
+              <select
+                className={styles.settingSelect}
+                value={descriptionStyleId}
+                onChange={handleDescriptionStyleChange}
+                aria-label={t('settings.descriptionStyle')}
+              >
+                {DESCRIPTION_STYLES.map((style) => (
+                  <option key={style.id} value={style.id}>
+                    {t(style.labelKey)}
+                  </option>
+                ))}
               </select>
-              <span className={styles.comingSoon}>{t('button.soon')}</span>
             </div>
             <p className={styles.stubHint}>{t('settings.moreLater')}</p>
           </div>

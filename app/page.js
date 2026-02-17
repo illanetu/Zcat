@@ -11,6 +11,7 @@ import CopyButton from './components/CopyButton'
 import ShareButton from './components/ShareButton'
 import { buildParameterCard } from '../lib/card-utils'
 import { generateDescription } from '../lib/ai-client'
+import { getStoredStyleId } from '../lib/description-styles'
 import { TECHNIQUE_KEYS, MATERIAL_KEYS } from '../lib/form-options'
 import styles from './page.module.css'
 
@@ -36,7 +37,7 @@ export default function Home() {
   }
 
   const [description, setDescription] = useState('')
-  const [descriptionPoetic, setDescriptionPoetic] = useState('')
+  const [descriptionStyleId, setDescriptionStyleId] = useState('')
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false)
   const [descriptionError, setDescriptionError] = useState(null)
 
@@ -52,16 +53,17 @@ export default function Home() {
     setDescriptionError(null)
     setIsGeneratingDescription(true)
     setDescription('')
-    setDescriptionPoetic('')
+    setDescriptionStyleId('')
     try {
       const dataForApi = {
         ...formData,
         technique: TECHNIQUE_KEYS.includes(formData.technique) ? t(`techniques.${formData.technique}`) : formData.technique,
         material: MATERIAL_KEYS.includes(formData.material) ? t(`materials.${formData.material}`) : formData.material
       }
-      const { description: d, descriptionPoetic: dp } = await generateDescription(imageData.base64, dataForApi, i18n.language)
+      const styleId = getStoredStyleId()
+      const { description: d, descriptionStyleId: sid } = await generateDescription(imageData.base64, dataForApi, i18n.language, styleId)
       setDescription(d)
-      setDescriptionPoetic(dp)
+      setDescriptionStyleId(sid)
     } catch (err) {
       setDescriptionError(err.message || t('errors.descriptionFailed'))
     } finally {
@@ -136,22 +138,22 @@ export default function Home() {
         </div>
 
         <div className={styles.row2}>
-          {(description || descriptionPoetic) && (
+          {description && (
             <div className={styles.actionsBar}>
               <CopyButton
-                text={[description, descriptionPoetic].filter(Boolean).join('\n\n')}
+                text={description}
                 label={t('button.copy')}
               />
               <ShareButton
                 title={formData.title || t('card.defaultTitle')}
-                text={[description, descriptionPoetic].filter(Boolean).join('\n\n')}
+                text={description}
               />
             </div>
           )}
           <div className={styles.descriptionsRow}>
             <DescriptionCard
               description={description}
-              descriptionPoetic={descriptionPoetic}
+              descriptionStyleId={descriptionStyleId}
               isLoading={isGeneratingDescription}
               error={descriptionError}
             />

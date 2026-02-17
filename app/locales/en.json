@@ -31,6 +31,9 @@
     "styleNeutral": "Neutral",
     "stylePoetic": "Poetic",
     "styleCatalog": "Catalog",
+    "styleBrief": "Brief",
+    "styleAcademic": "Academic",
+    "styleEmotional": "Emotional",
     "moreLater": "More options will be added later."
   },
   "form": {
