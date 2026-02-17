@@ -7,10 +7,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+"lint": "next lint",
+    "download-font": "node scripts/download-roboto-font.js"
   },
   "dependencies": {
     "i18next": "^25.8.7",
+    "jspdf": "^4.1.0",
     "next": "^15.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

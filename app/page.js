@@ -9,6 +9,7 @@ import DescriptionCard from './components/DescriptionCard'
 import SettingsButton from './components/SettingsButton'
 import CopyButton from './components/CopyButton'
 import ShareButton from './components/ShareButton'
+import SendPdfButton from './components/SendPdfButton'
 import { buildParameterCard } from '../lib/card-utils'
 import { generateDescription } from '../lib/ai-client'
 import { getStoredStyleId } from '../lib/description-styles'
@@ -138,7 +139,7 @@ export default function Home() {
         </div>
 
         <div className={styles.row2}>
-          {description && (
+          {(description || (imageData && parameterCardData)) && (
             <div className={styles.actionsBar}>
               <CopyButton
                 text={description}
@@ -147,6 +148,13 @@ export default function Home() {
               <ShareButton
                 title={formData.title || t('card.defaultTitle')}
                 text={description}
+              />
+              <SendPdfButton
+                imageData={imageData}
+                label={parameterCardData}
+                description={description}
+                descriptionStyleId={descriptionStyleId}
+                filename={formData.title || undefined}
               />
             </div>
           )}

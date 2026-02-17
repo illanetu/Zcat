@@ -20,8 +20,7 @@ export async function POST(request) {
 
     // Определение API провайдера (OpenRouter или OpenAI)
     const baseUrl = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1'
-    const apiKey = process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY
-    
+    const apiKey = (process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY || '').trim()
     if (!apiKey) {
       return NextResponse.json(
         { error: 'API ключ не настроен. Добавьте OPENROUTER_API_KEY или OPENAI_API_KEY в .env.local' },
@@ -66,9 +65,9 @@ export async function POST(request) {
       method: 'POST',
       headers,
       body: JSON.stringify({
-        // Используем модель в зависимости от провайдера
-        model: process.env.OPENROUTER_API_KEY 
-          ? (process.env.OPENROUTER_MODEL || 'qwen/qwen3-vl-30b-a3b-thinking') // 'openai/gpt-4o' - платная
+        // Модель: для названий можно задать OPENROUTER_MODEL_TITLES, иначе та же что для описаний
+        model: process.env.OPENROUTER_API_KEY
+          ? (process.env.OPENROUTER_MODEL_TITLES || process.env.OPENROUTER_MODEL || 'qwen/qwen3-vl-30b-a3b-thinking')
           : 'gpt-4o',
         messages: [
           {
@@ -101,18 +100,28 @@ export async function POST(request) {
       const errorData = await response.json().catch(() => ({}))
       console.error('AI API error:', errorData)
       const provider = process.env.OPENROUTER_API_KEY ? 'OpenRouter' : 'OpenAI'
+      const rawMessage = errorData.error?.message || 'Неизвестная ошибка'
+      let userMessage = `Ошибка ${provider} API: ${rawMessage}`
+      if (response.status === 401) {
+        userMessage = process.env.OPENROUTER_API_KEY
+          ? 'Неверный или просроченный API ключ OpenRouter. Проверьте OPENROUTER_API_KEY в .env.local и ключ на https://openrouter.ai/keys'
+          : 'Неверный или просроченный API ключ. Проверьте OPENAI_API_KEY в .env.local'
+      }
       return NextResponse.json(
-        { error: `Ошибка ${provider} API: ${errorData.error?.message || 'Неизвестная ошибка'}` },
+        { error: userMessage },
         { status: response.status }
       )
     }
 
     const data = await response.json()
-    const content = data.choices?.[0]?.message?.content
+    const message = data.choices?.[0]?.message
+    // У моделей с "thinking" текст может быть в content или в reasoning
+    const content = (message?.content ?? message?.reasoning ?? '').trim()
 
     if (!content) {
+      console.error('Generate titles: пустой ответ от AI', JSON.stringify({ choices: data.choices?.[0], usage: data.usage }))
       return NextResponse.json(
-        { error: 'Не удалось получить ответ от AI' },
+        { error: 'Не удалось получить ответ от AI. Попробуйте другое изображение или повторите позже.' },
         { status: 500 }
       )
     }

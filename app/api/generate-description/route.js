@@ -38,7 +38,7 @@ export async function POST(request) {
     }
 
     const baseUrl = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1'
-    const apiKey = process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY
+    const apiKey = (process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY || '').trim()
 
     if (!apiKey) {
       return NextResponse.json(
@@ -128,8 +128,15 @@ ${sectionMarker}
       const errorData = await response.json().catch(() => ({}))
       console.error('AI API error:', errorData)
       const provider = process.env.OPENROUTER_API_KEY ? 'OpenRouter' : 'OpenAI'
+      const rawMessage = errorData.error?.message || 'Неизвестная ошибка'
+      let userMessage = `Ошибка ${provider} API: ${rawMessage}`
+      if (response.status === 401) {
+        userMessage = process.env.OPENROUTER_API_KEY
+          ? 'Неверный или просроченный API ключ OpenRouter. Проверьте OPENROUTER_API_KEY в .env.local и ключ на https://openrouter.ai/keys'
+          : 'Неверный или просроченный API ключ. Проверьте OPENAI_API_KEY в .env.local'
+      }
       return NextResponse.json(
-        { error: `Ошибка ${provider} API: ${errorData.error?.message || 'Неизвестная ошибка'}` },
+        { error: userMessage },
         { status: response.status }
       )
     }
