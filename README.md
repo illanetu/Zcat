@@ -76,17 +76,45 @@ npm start
 ```
 Zcat/
 ├── app/
-│   ├── components/     # React компоненты
-│   ├── layout.js       # Корневой layout
-│   ├── page.js         # Главная страница
-│   ├── globals.css     # Глобальные стили
-│   └── page.module.css # Стили главной страницы
-├── lib/                # Утилиты и вспомогательные функции
-├── public/             # Статические ресурсы (изображения и т.д.)
-├── next.config.js      # Конфигурация Next.js
-└── package.json        # Зависимости проекта
+│   ├── api/                      # API Routes (Server)
+│   │   ├── generate-titles/      # POST — генерация названий по изображению (AI)
+│   │   ├── generate-description/ # POST — генерация описания по изображению и данным (AI)
+│   │   └── check-api-key/        # GET — проверка наличия API ключа
+│   ├── components/               # React-компоненты (Client, где нужно)
+│   │   ├── ImageUpload.jsx       # Загрузка изображения (drag-and-drop, превью, base64)
+│   │   ├── ArtworkForm.jsx       # Форма: автор, название, год, размер, техника, материал; генерация названий
+│   │   ├── ParameterCard.jsx     # Карточка параметров (этикетка)
+│   │   ├── DescriptionCard.jsx   # Карточка с описанием
+│   │   ├── SettingsButton.jsx    # Кнопка настроек (язык, стиль описания)
+│   │   ├── CopyButton.jsx        # Копирование текста в буфер
+│   │   ├── ShareButton.jsx      # Поделиться (Web Share API)
+│   │   ├── SendPdfButton.jsx    # Скачать PDF с карточкой и описанием
+│   │   └── I18nProvider.jsx     # Провайдер i18n
+│   ├── locales/                  # Переводы (ru.json, en.json)
+│   ├── layout.js                 # Корневой layout
+│   ├── page.js                   # Главная страница (сводка всех секций)
+│   ├── globals.css               # Глобальные стили и CSS-переменные
+│   └── page.module.css           # Стили главной страницы
+├── lib/
+│   ├── ai-client.js              # Клиент AI: generateTitles(), generateDescription()
+│   ├── card-utils.js             # Сборка этикетки: buildParameterCard(), formatSize(), isParameterCardReady()
+│   ├── description-styles.js    # Стили описания (catalog, poetic, neutral, brief)
+│   ├── form-options.js           # Опции техник и материалов для формы
+│   ├── pdf-utils.js              # Генерация PDF (jsPDF)
+│   ├── storage.js                # localStorage-хелперы
+│   └── roboto-font-base64.js     # Шрифт для PDF
+├── public/                       # Статические ресурсы
+├── next.config.js
+├── package.json
+└── PLAN.md                       # План реализации и статус этапов
 ```
+
+## Тестирование и оптимизация
+
+- **Сборка:** `npm run build` — проверка сборки и размера бандла (Next.js выводит отчёт по страницам).
+- **Линт:** `npm run lint`.
+- Рекомендуется проверить приложение в Chrome, Firefox и при необходимости в Safari; на мобильном и десктопе.
 
 ## Статус разработки
 
-Проект находится в активной разработке. См. [PLAN.md](./PLAN.md) для детального плана реализации.
+Реализованы этапы 1–8 плана (загрузка изображения, форма, генерация названий и описаний, карточки, настройки, стилизация). См. [PLAN.md](./PLAN.md) для детального плана и оставшихся шагов тестирования и полировки.

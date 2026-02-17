@@ -3,6 +3,16 @@
 import styles from './ParameterCard.module.css'
 import { stripTitleQuotes } from '../../lib/card-utils'
 
+/**
+ * Карточка параметров произведения (этикетка): автор, название, техника/материал, размер, год.
+ * Стиль в духе каталогов галерей. Не рендерится, если нет title, size или techniqueAndMaterial.
+ * @param {Object} props
+ * @param {string} props.title - Название произведения
+ * @param {string} [props.author] - Автор
+ * @param {string} props.size - Размер (например "70 × 50 см")
+ * @param {string} props.techniqueAndMaterial - Техника и материал (например "Масло / холст")
+ * @param {string} [props.year] - Год
+ */
 export default function ParameterCard({ title, author, size, techniqueAndMaterial, year }) {
   if (!title || !size || !techniqueAndMaterial) {
     return null

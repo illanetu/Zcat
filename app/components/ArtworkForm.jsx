@@ -6,6 +6,14 @@ import { generateTitles } from '../../lib/ai-client'
 import { TECHNIQUE_KEYS, MATERIAL_KEYS } from '../../lib/form-options'
 import styles from './ArtworkForm.module.css'
 
+/**
+ * Форма данных произведения: автор, название, год, размер, техника, материал.
+ * Поддерживает генерацию названий по изображению (AI) и выбор из списка.
+ * @param {Object} props
+ * @param {{ base64: string } | null} props.imageData - Данные загруженного изображения (для генерации названий)
+ * @param {(data: Object) => void} props.onFormDataChange - Колбэк при изменении полей формы
+ * @param {boolean} [props.showTitle=true] - Показывать ли заголовок секции формы
+ */
 export default function ArtworkForm({ imageData, onFormDataChange, showTitle = true }) {
   const { t, i18n } = useTranslation()
   const [title, setTitle] = useState('')

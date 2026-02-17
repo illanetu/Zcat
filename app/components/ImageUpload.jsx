@@ -4,6 +4,13 @@ import { useState, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './ImageUpload.module.css'
 
+/**
+ * Компонент загрузки изображения (JPG/PNG) с drag-and-drop и превью.
+ * Конвертирует файл в base64 и передаёт данные в onImageSelect.
+ * @param {Object} props
+ * @param {(data: { file: File, preview: string, base64: string } | null) => void} props.onImageSelect - Колбэк при выборе/удалении изображения
+ * @param {React.ReactNode} [props.children] - Дополнительные кнопки под превью
+ */
 export default function ImageUpload({ onImageSelect, children }) {
   const { t } = useTranslation()
   const [image, setImage] = useState(null)
