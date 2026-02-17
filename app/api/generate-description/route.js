@@ -76,7 +76,7 @@ export async function POST(request) {
     if (artworkData?.title) contextParts.push(`Название: ${artworkData.title}`)
     if (artworkData?.author) contextParts.push(`Автор: ${artworkData.author}`)
     if (artworkData?.width && artworkData?.height) {
-      contextParts.push(`Размер: ${artworkData.width} × ${artworkData.height} см`)
+      contextParts.push(`Размер: ${artworkData.height} × ${artworkData.width} см`)
     }
     if (artworkData?.technique) contextParts.push(`Техника: ${artworkData.technique}`)
     if (artworkData?.material) contextParts.push(`Материал: ${artworkData.material}`)
