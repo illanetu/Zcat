@@ -7,7 +7,9 @@ import styles from './DescriptionCard.module.css'
 export default function DescriptionCard({ description, descriptionStyleId, isLoading, error }) {
   const { t } = useTranslation()
   const style = descriptionStyleId ? getDescriptionStyle(descriptionStyleId) : null
-  const title = style ? t(style.labelKey) : t('description.title')
+  const titleNode = style
+    ? <>{t('description.title')} ({t('description.styleLabel')} <em>{t(style.labelKey)}</em>)</>
+    : t('description.title')
 
   if (error) {
     return (
@@ -41,7 +43,7 @@ export default function DescriptionCard({ description, descriptionStyleId, isLoa
   return (
     <div className={styles.card}>
       <div className={styles.cardContent}>
-        <h3 className={styles.cardTitle}>{title}</h3>
+        <h3 className={styles.cardTitle}>{titleNode}</h3>
         <p className={styles.description}>{description}</p>
       </div>
     </div>

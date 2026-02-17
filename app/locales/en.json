@@ -108,6 +108,7 @@
   },
   "description": {
     "title": "Description",
+    "styleLabel": "style",
     "poeticTitle": "Atmospheric description",
     "generating": "Generating description..."
   },

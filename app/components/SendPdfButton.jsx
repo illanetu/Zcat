@@ -7,7 +7,7 @@ import { buildArtworkPdf, downloadPdf } from '../../lib/pdf-utils'
 import styles from './SendPdfButton.module.css'
 
 /**
- * Кнопка «Отправить»: формирует PDF (превью + этикетка + описание) и скачивает файл.
+ * Кнопка «Сохранить в PDF »: формирует PDF (превью + этикетка + описание) и скачивает файл.
  */
 export default function SendPdfButton({ imageData, label, description, descriptionStyleId, filename }) {
   const { t } = useTranslation()
@@ -23,8 +23,9 @@ export default function SendPdfButton({ imageData, label, description, descripti
     if (!canSend) return
     setError(null)
     try {
-      const descriptionTitle = descriptionStyleId
-        ? t(getDescriptionStyle(descriptionStyleId).labelKey)
+      const style = descriptionStyleId ? getDescriptionStyle(descriptionStyleId) : null
+      const descriptionTitle = style
+        ? `${t('description.title')} (${t('description.styleLabel')} ${t(style.labelKey)})`
         : t('description.title')
       const blob = await buildArtworkPdf(
         imageDataUrl,

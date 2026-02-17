@@ -14,7 +14,10 @@ export default function ParameterCard({ title, author, size, techniqueAndMateria
     <div className={styles.card}>
       <div className={styles.cardContent}>
         {hasAuthor && <p className={styles.artworkAuthor}>{author}</p>}
-        <h2 className={styles.artworkTitle}>{title}</h2>
+        <h2 className={styles.artworkTitle}>«{String(title)
+          .replace(/^[\s\u00AB\u00BB\u201C\u201D\u201E\u201F""]+/, '')
+          .replace(/[\s\u00AB\u00BB\u201C\u201D\u201E\u201F""]+$/, '')
+          .trim()}»</h2>
         <p className={styles.artworkTechnique}>{techniqueAndMaterial}</p>
         <p className={styles.artworkSize}>{size}</p>
         {hasYear && <p className={styles.artworkYear}>{year}</p>}
