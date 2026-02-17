@@ -25,13 +25,14 @@
 
 .cardTitle {
   font-family: var(--font-primary);
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   font-weight: 600;
+  line-height: 1.25;
   color: var(--color-primary);
   margin: 0;
   letter-spacing: 0.02em;
   border-bottom: 1px solid var(--color-border);
-  padding-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
 }
 
 .description,
@@ -52,13 +53,14 @@
 
 .cardTitlePoetic {
   font-family: var(--font-primary);
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   font-weight: 600;
+  line-height: 1.25;
   color: var(--color-accent);
   margin: 0;
   letter-spacing: 0.02em;
   border-bottom: 1px solid var(--color-border);
-  padding-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
 }
 
 .loading {
@@ -107,7 +109,7 @@
 
   .cardTitle,
   .cardTitlePoetic {
-    font-size: 1.15rem;
+    font-size: 1rem;
   }
 
   .description,
@@ -123,7 +125,7 @@
 
   .cardTitle,
   .cardTitlePoetic {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .description,
