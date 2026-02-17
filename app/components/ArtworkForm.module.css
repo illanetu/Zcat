@@ -205,6 +205,26 @@
   color: var(--color-text);
 }
 
+/* Группа автор + год в одной строке */
+.authorYearGroup {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+  margin-bottom: var(--spacing-sm);
+}
+
+.authorYearGroup .formGroup {
+  margin-bottom: 0;
+}
+
+.authorYearGroup .formGroup:first-child {
+  flex: 1;
+}
+
+.authorYearGroup .yearFieldGroup {
+  flex: 0 0 90px;
+}
+
 /* Группа размера, техники и материала */
 .sizeTechniqueMaterialGroup {
   display: flex;
@@ -241,13 +261,9 @@
   align-items: flex-start;
 }
 
-.titleYearGroup .formGroup:first-child {
-  flex: 1;
-  margin-bottom: 0;
-}
-
-.titleYearGroup .formGroup:last-child {
-  flex: 0 0 120px;
+.titleYearGroup .formGroup {
+  flex: 1 1 100%;
+  min-width: 0;
   margin-bottom: 0;
 }
 
@@ -259,6 +275,7 @@
 
 .titleYearGroup .titleInputGroup .input {
   flex: 1;
+  min-width: 0;
 }
 
 
@@ -274,6 +291,15 @@
 
   .generateButton {
     width: 100%;
+  }
+
+  .authorYearGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .authorYearGroup .yearFieldGroup {
+    flex: 1 1 auto;
   }
 
   .sizeTechniqueMaterialGroup {

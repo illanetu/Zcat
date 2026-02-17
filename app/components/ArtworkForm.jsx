@@ -7,7 +7,7 @@ import { TECHNIQUE_KEYS, MATERIAL_KEYS } from '../../lib/form-options'
 import styles from './ArtworkForm.module.css'
 
 /**
- * Форма данных произведения: автор, название, год, размер, техника, материал.
+ * Форма данных произведения: автор, год, название, размер, техника, материал.
  * Поддерживает генерацию названий по изображению (AI) и выбор из списка.
  * @param {Object} props
  * @param {{ base64: string } | null} props.imageData - Данные загруженного изображения (для генерации названий)
@@ -246,22 +246,42 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
         </div>
       )}
 
-      <div className={styles.formGroup}>
-        <label htmlFor="author" className={styles.label}>
-          {t('form.author')}
-        </label>
-        <input
-          id="author"
-          type="text"
-          value={author}
-          onChange={handleAuthorChange}
-          onBlur={() => validateField('author', author)}
-          className={`${styles.input} ${errors.author ? styles.inputError : ''}`}
-          placeholder={t('form.placeholderAuthor')}
-        />
-        {errors.author && (
-          <span className={styles.fieldError}>{errors.author}</span>
-        )}
+      <div className={styles.authorYearGroup}>
+        <div className={styles.formGroup}>
+          <label htmlFor="author" className={styles.label}>
+            {t('form.author')}
+          </label>
+          <input
+            id="author"
+            type="text"
+            value={author}
+            onChange={handleAuthorChange}
+            onBlur={() => validateField('author', author)}
+            className={`${styles.input} ${errors.author ? styles.inputError : ''}`}
+            placeholder={t('form.placeholderAuthor')}
+          />
+          {errors.author && (
+            <span className={styles.fieldError}>{errors.author}</span>
+          )}
+        </div>
+        <div className={`${styles.formGroup} ${styles.yearFieldGroup}`}>
+          <label htmlFor="year" className={styles.label}>
+            Год
+          </label>
+          <input
+            id="year"
+            type="number"
+            value={year}
+            onChange={handleYearChange}
+            onBlur={() => validateField('year', year)}
+            className={`${styles.input} ${errors.year ? styles.inputError : ''}`}
+            min="1000"
+            max="9999"
+          />
+          {errors.year && (
+            <span className={styles.fieldError}>{errors.year}</span>
+          )}
+        </div>
       </div>
 
       <div className={styles.titleYearGroup}>
@@ -324,25 +344,6 @@ export default function ArtworkForm({ imageData, onFormDataChange, showTitle = t
             </button>
           </div>
         )}
-
-        <div className={styles.formGroup}>
-          <label htmlFor="year" className={styles.label}>
-            Год
-          </label>
-          <input
-            id="year"
-            type="number"
-            value={year}
-            onChange={handleYearChange}
-            onBlur={() => validateField('year', year)}
-            className={`${styles.input} ${errors.year ? styles.inputError : ''}`}
-            min="1000"
-            max="9999"
-          />
-          {errors.year && (
-            <span className={styles.fieldError}>{errors.year}</span>
-          )}
-        </div>
       </div>
 
       <div className={styles.sizeTechniqueMaterialGroup}>
