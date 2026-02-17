@@ -38,14 +38,6 @@
   letter-spacing: 0.02em;
 }
 
-.artworkTitle::before {
-  content: '«';
-}
-
-.artworkTitle::after {
-  content: '»';
-}
-
 .artworkAuthor {
   font-family: var(--font-primary);
   font-size: 1.1rem;
