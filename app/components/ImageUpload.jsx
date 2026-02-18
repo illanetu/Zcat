@@ -149,7 +149,7 @@ export default function ImageUpload({ onImageSelect, children }) {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/jpeg,image/jpg,image/png"
+        accept="image/*"
         onChange={handleFileSelect}
         className={styles.fileInput}
         disabled={isLoading}
