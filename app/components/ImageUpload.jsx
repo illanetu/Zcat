@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './ImageUpload.module.css'
 
 /**
  * Компонент загрузки изображения (JPG/PNG) с drag-and-drop и превью.
  * Конвертирует файл в base64 и передаёт данные в onImageSelect.
+ * На мобильных: кнопка «Сделать фото» открывает камеру через getUserMedia.
  * @param {Object} props
  * @param {(data: { file: File, preview: string, base64: string } | null) => void} props.onImageSelect - Колбэк при выборе/удалении изображения
  * @param {React.ReactNode} [props.children] - Дополнительные кнопки под превью
@@ -19,8 +20,11 @@ export default function ImageUpload({ onImageSelect, children }) {
   const [isDragging, setIsDragging] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [showCamera, setShowCamera] = useState(false)
+  const [cameraError, setCameraError] = useState(null)
   const fileInputRef = useRef(null)
-  const cameraInputRef = useRef(null)
+  const videoRef = useRef(null)
+  const streamRef = useRef(null)
 
   const allowedFormats = ['image/jpeg', 'image/jpg', 'image/png']
   const maxFileSize = 10 * 1024 * 1024 // 10MB
@@ -130,11 +134,69 @@ export default function ImageUpload({ onImageSelect, children }) {
     fileInputRef.current?.click()
   }
 
-  // Открыть камеру (атрибут capture заставляет браузер открыть камеру)
+  // Открыть камеру через getUserMedia (надёжно работает на мобильных)
   const handleTakePhoto = (e) => {
     e.stopPropagation()
-    cameraInputRef.current?.click()
+    setCameraError(null)
+    setShowCamera(true)
   }
+
+  // Закрыть камеру и остановить поток
+  const handleCloseCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop())
+      streamRef.current = null
+    }
+    setShowCamera(false)
+    setCameraError(null)
+  }, [])
+
+  // Захват кадра с камеры
+  const handleCapturePhoto = useCallback(() => {
+    const video = videoRef.current
+    if (!video || !video.videoWidth) return
+
+    const canvas = document.createElement('canvas')
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(video, 0, 0)
+
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) return
+        const file = new File([blob], `photo-${Date.now()}.jpg`, { type: 'image/jpeg' })
+        handleCloseCamera()
+        handleFile(file)
+      },
+      'image/jpeg',
+      0.92
+    )
+  }, [handleCloseCamera, handleFile])
+
+  // Запуск/остановка потока камеры
+  useEffect(() => {
+    if (!showCamera) return
+    const video = videoRef.current
+    if (!video || !navigator.mediaDevices?.getUserMedia) {
+      setCameraError(t('upload.cameraNotSupported'))
+      return
+    }
+    const constraints = { video: { facingMode: 'environment' } }
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .catch(() => navigator.mediaDevices.getUserMedia({ video: true }))
+      .then((stream) => {
+        if (stream) {
+          streamRef.current = stream
+          video.srcObject = stream
+        }
+      })
+      .catch(() => {
+        setCameraError(t('upload.cameraError'))
+      })
+    return handleCloseCamera
+  }, [showCamera, t, handleCloseCamera])
 
   // Удаление изображения
   const handleRemove = (e) => {
@@ -145,7 +207,6 @@ export default function ImageUpload({ onImageSelect, children }) {
     setError(null)
     setIsLoading(false)
     if (fileInputRef.current) fileInputRef.current.value = ''
-    if (cameraInputRef.current) cameraInputRef.current.value = ''
     if (onImageSelect) {
       onImageSelect(null)
     }
@@ -157,15 +218,6 @@ export default function ImageUpload({ onImageSelect, children }) {
         ref={fileInputRef}
         type="file"
         accept="image/*"
-        onChange={handleFileSelect}
-        className={styles.fileInput}
-        disabled={isLoading}
-      />
-      <input
-        ref={cameraInputRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
         onChange={handleFileSelect}
         className={styles.fileInput}
         disabled={isLoading}
@@ -271,6 +323,44 @@ export default function ImageUpload({ onImageSelect, children }) {
       {error && (
         <div className={styles.errorMessage} role="alert">
           {error}
+        </div>
+      )}
+
+      {showCamera && (
+        <div className={styles.cameraOverlay} role="dialog" aria-modal="true" aria-label={t('upload.takePhoto')}>
+          <div className={styles.cameraModal}>
+            <button
+              type="button"
+              className={styles.cameraClose}
+              onClick={handleCloseCamera}
+              aria-label={t('upload.closeCamera')}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            {cameraError ? (
+              <div className={styles.cameraError}>
+                <p>{cameraError}</p>
+                <button type="button" className={styles.changeButton} onClick={handleCloseCamera}>
+                  {t('upload.closeCamera')}
+                </button>
+              </div>
+            ) : (
+              <>
+                <video ref={videoRef} className={styles.cameraVideo} autoPlay playsInline muted />
+                <button
+                  type="button"
+                  className={styles.cameraCapture}
+                  onClick={handleCapturePhoto}
+                  aria-label={t('upload.capturePhoto')}
+                >
+                  <span className={styles.cameraCaptureInner} />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>

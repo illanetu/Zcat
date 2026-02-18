@@ -107,7 +107,11 @@
     "errorProcess": "Error processing image",
     "errorRead": "Error reading file",
     "errorAbort": "File reading was aborted",
-    "takePhoto": "Take photo"
+    "takePhoto": "Take photo",
+    "closeCamera": "Close",
+    "capturePhoto": "Take picture",
+    "cameraNotSupported": "Camera is not supported in this browser",
+    "cameraError": "Could not access camera. Please allow access in settings."
   },
   "description": {
     "title": "Description",
