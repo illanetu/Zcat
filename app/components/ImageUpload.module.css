@@ -57,6 +57,31 @@
   margin: 0;
 }
 
+/* Кнопка «Сделать фото» — только на мобильных, capture открывает камеру */
+.takePhotoButton {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.takePhotoButton:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.takePhotoButton svg {
+  flex-shrink: 0;
+}
+
 .previewContainer {
   width: 100%;
   display: flex;
@@ -203,6 +228,10 @@
 
   .uploadHint {
     font-size: 0.85rem;
+  }
+
+  .takePhotoButton {
+    display: inline-flex;
   }
 
   .previewImage {

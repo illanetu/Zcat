@@ -106,7 +106,8 @@
     "errorSize": "File too large. Maximum size: 10MB",
     "errorProcess": "Error processing image",
     "errorRead": "Error reading file",
-    "errorAbort": "File reading was aborted"
+    "errorAbort": "File reading was aborted",
+    "takePhoto": "Take photo"
   },
   "description": {
     "title": "Description",
