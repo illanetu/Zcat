@@ -146,8 +146,11 @@ export default function Home() {
                 label={t('button.copy')}
               />
               <ShareButton
-                title={formData.title || t('card.defaultTitle')}
-                text={description}
+                imageData={imageData}
+                label={parameterCardData}
+                description={description}
+                descriptionStyleId={descriptionStyleId}
+                filename={formData.title || undefined}
               />
               <SendPdfButton
                 imageData={imageData}

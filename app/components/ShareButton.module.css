@@ -1,3 +1,15 @@
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.error {
+  font-size: 0.8rem;
+  color: var(--color-error);
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -23,6 +35,11 @@
 .button:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .button.feedback {
