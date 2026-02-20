@@ -142,6 +142,26 @@
   flex-wrap: wrap;
 }
 
+/* Кнопка «Поделиться» только на мобильных */
+.shareOnlyMobile {
+  display: none;
+}
+@media (max-width: 900px) {
+  .shareOnlyMobile {
+    display: block;
+  }
+}
+
+/* Кнопка «Сохранить в PDF» только в web-версии (десктоп) */
+.pdfOnlyWeb {
+  display: block;
+}
+@media (max-width: 900px) {
+  .pdfOnlyWeb {
+    display: none;
+  }
+}
+
 .generateDescriptionButton {
   align-self: center;
   padding: 0.5rem 1rem;

@@ -145,20 +145,24 @@ export default function Home() {
                 text={description}
                 label={t('button.copy')}
               />
-              <ShareButton
-                imageData={imageData}
-                label={parameterCardData}
-                description={description}
-                descriptionStyleId={descriptionStyleId}
-                filename={formData.title || undefined}
-              />
-              <SendPdfButton
-                imageData={imageData}
-                label={parameterCardData}
-                description={description}
-                descriptionStyleId={descriptionStyleId}
-                filename={formData.title || undefined}
-              />
+              <span className={styles.shareOnlyMobile}>
+                <ShareButton
+                  imageData={imageData}
+                  label={parameterCardData}
+                  description={description}
+                  descriptionStyleId={descriptionStyleId}
+                  filename={formData.title || undefined}
+                />
+              </span>
+              <span className={styles.pdfOnlyWeb}>
+                <SendPdfButton
+                  imageData={imageData}
+                  label={parameterCardData}
+                  description={description}
+                  descriptionStyleId={descriptionStyleId}
+                  filename={formData.title || undefined}
+                />
+              </span>
             </div>
           )}
           <div className={styles.descriptionsRow}>
