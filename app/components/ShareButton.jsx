@@ -38,7 +38,9 @@ export default function ShareButton({ imageData, label, description, description
         descriptionTitle
       )
       const pdfFilename = filename || label.title || 'artwork'
-      const safeName = `${pdfFilename.replace(/[^\w\s-]/g, '')}.pdf`
+      // Удаляем только символы, недопустимые в имени файла (кириллица и др. остаются)
+      const safeBase = (pdfFilename.replace(/[/\\:*?"<>|\x00-\x1f]/g, '').trim().replace(/\s+/g, ' ') || 'artwork')
+      const safeName = `${safeBase}.pdf`
       const file = new File([blob], safeName, { type: 'application/pdf' })
 
       if (typeof navigator !== 'undefined' && navigator.canShare?.({ files: [file] })) {
