@@ -39,7 +39,11 @@ export default function ShareButton({ imageData, label, description, description
       )
       const pdfFilename = filename || label.title || 'artwork'
       // Удаляем только символы, недопустимые в имени файла (кириллица и др. остаются)
-      const safeBase = (pdfFilename.replace(/[/\\:*?"<>|\x00-\x1f]/g, '').trim().replace(/\s+/g, ' ') || 'artwork')
+      let safeBase = (pdfFilename.replace(/[/\\:*?"<>|\x00-\x1f]/g, '').trim().replace(/\s+/g, ' ') || 'artwork')
+      // Убираем суффикс " (1)" и уже имеющееся .pdf, чтобы расширение было ровно .pdf
+      safeBase = safeBase.replace(/\s*\(\d+\)\s*$/, '').trim()
+      if (safeBase.toLowerCase().endsWith('.pdf')) safeBase = safeBase.slice(0, -4).trim()
+      safeBase = safeBase || 'artwork'
       const safeName = `${safeBase}.pdf`
       const file = new File([blob], safeName, { type: 'application/pdf' })
 
