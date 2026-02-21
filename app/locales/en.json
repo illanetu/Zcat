@@ -1,8 +1,8 @@
 {
   "app": {
-    "title": "Description generator for catalogs and exhibitions",
-    "metaTitle": "Catalog card generator",
-    "metaDescription": "Generator for catalog and exhibition cards"
+    "title": "Legend. Description generator for catalogs.",
+    "metaTitle": "Legend. Description generator for catalogs.",
+    "metaDescription": "Legend. Description generator for catalogs and exhibitions."
   },
   "section": {
     "uploadImage": "Image upload",
@@ -38,7 +38,12 @@
     "styleBrief": "Brief",
     "styleAcademic": "Academic",
     "styleEmotional": "Emotional",
-    "moreLater": "More options will be added later."
+    "moreLater": "More options will be added later.",
+    "about": "About",
+    "appName": "Legend. Description generator for catalogs.",
+    "aboutText": "Web app for creating artwork cards with AI-generated titles and descriptions. For artists, galleries, and exhibition organizers.",
+    "back": "Back",
+    "version": "Version"
   },
   "form": {
     "artworkData": "Artwork data",
